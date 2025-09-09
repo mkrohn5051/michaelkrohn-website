@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification with Keras - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Code block */
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            line-height: 1.4;
+        }
+
+        /* GitHub link */
+        .github-link {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .github-link:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Image Classification with Keras</h1>
+            <p class="project-subtitle">Exploring CNNs, VGG16, and Deep Learning with Natural Scene Images</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>I'm continually trying to expand my machine learning skills. I realized that I hadn't really used Tensorflow in any meaningful way and I wanted to try an image classification project. There are some terrific projects to try out, but this one stood out in a few key ways: 1. The source of the data 2. Setting up multiple convolutional layers and 3. VGG16 is a new model to me (at the time of writing).</p>
+            </section>
+
+            <!-- Setup -->
+            <section class="content-section">
+                <h2>Setup</h2>
+                <p>I chose image classification because I have experience working with the MNIST dataset of handwritten digits. I did that project with Matlab and I will re-do it with machine learning and python so I needed a little practice first.</p>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">TensorFlow</span>
+                    <span class="tech-tag">Keras</span>
+                    <span class="tech-tag">CNN</span>
+                    <span class="tech-tag">VGG16</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Computer Vision</span>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section class="content-section">
+                <h2>Methodology</h2>
+                <p>I take a set of images with known labels: mountain, street, glacier, buildings, sea, and forest. I need to shape the data a bit because I'm using a Convolutional Neural Network and Tensorflow to process the data. This means that I need to account for the size of the image, whether the images include color (RGB), and I need to track the datatypes as I go.</p>
+
+                <p>I also considered some advice from a bonafide ML Engineer: to make sure to showcase what stakeholders want to see. It's one thing to know how to do this, it's quite another to explain it with the appropriate visuals.</p>
+
+                <p>Now for the model. I originally started with the example from a few different sources but quickly decided to add some additional layers to the model to see what might happen. The model I ended up with:</p>
+
+                <div class="code-block">
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)),
+    MaxPooling2D(pool_size=(2, 2)),
+    Conv2D(32, (3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Conv2D(32, (3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dense(6, activation='softmax')
+])
+                </div>
+
+                <p>There are nine layers. The first convolutional layer has 32 filters, each with size 3x3. This is the tractor-trailer window. I used a pretty standard ReLU activation for all layers. I took the input shape that was defined during preprocessing in and added a MaxPooling layer that downsamples the output by 2x2. The next few layers are the same and I bumped up the final filter to 64. The last few layers are flattening layer, a dense layer and a final dense layer. The second-to-last layer has 128 neurons and the final layer has 6 neurons. The last layer also uses the softmax activation to produce a probability distribution over the classes.</p>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Results</h2>
+                <p>The results were compelling and it's clear I have some more exploration to do. The first pass, before I added a few layers:</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/first_first.avif" alt="First model accuracy curves" class="gallery-image">
+                    <img src="images/current-work/first_second.avif" alt="First model validation curves" class="gallery-image">
+                </div>
+                <p class="image-caption">Initial results showing accuracy and validation curves crossing over at less than one epoch</p>
+
+                <p>Out of the gate the accuracy and validation curves crossover at less than one epoch. Yikes. I added some layers and got the following results:</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/second_first.avif" alt="Improved model accuracy" class="gallery-image">
+                    <img src="images/current-work/second_second.avif" alt="Improved model validation" class="gallery-image">
+                </div>
+                <p class="image-caption">Much better results after adding additional layers - more epochs and better overall accuracy</p>
+
+                <p>This is much better in terms of epochs and accuracy overall. It aligns with what I would expect in dealing with a dataset the first time - that the results would fluctuate. For a small enough project, some directional improvements can be made and are made in this case. More layers = slightly better results. The real world implications are still pretty far away though... more layers may not be practical and there are likely other things that make more sense to change. The next table helps illustrate that last point:</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/third_first.avif" alt="Image rotation experiment results" class="gallery-image">
+                    <img src="images/current-work/third_second.avif" alt="Image rotation validation curves" class="gallery-image">
+                </div>
+                <p class="image-caption">Results after adding image rotation - precision and recall both improve nicely</p>
+
+                <p>This time I rotated the images to see what impact that might have. While there is some explaining to do with the above curves, the precision and recall both improve nicely. The next thing I wanted to try was to change the scanning window. The 3x3 bit above in the model was changed to 5x5 for fun:</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/fourth_first.avif" alt="5x5 filter results" class="gallery-image">
+                    <img src="images/current-work/fourth_second.avif" alt="5x5 filter validation" class="gallery-image">
+                </div>
+                <p class="image-caption">Very interesting results with 5x5 filters - more "natural" curves with crossover extending to second epoch</p>
+
+                <p>Very interesting! The curves look a little more like what I would expect with the crossover point extending to the second epoch but the precision and recall align pretty well with the original run of the data with less layers. The last thing I wanted to try was applying the VGG16 model. This model was implemented with very little optimization of tuning parameters and produced the following chart:</p>
+
+                <img src="images/current-work/fifth_first.avif" alt="VGG16 model results" class="project-image">
+                <p class="image-caption">VGG16 implementation results - still a work in progress</p>
+
+                <div class="quote">
+                    <p>This last piece is still a work in progress.  LOL.</p>
+                </div>
+
+                <a href="https://github.com/mkrohn5051/ImageClassification.git" class="github-link" target="_blank">
+                    View Image Classification Code on GitHub →
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

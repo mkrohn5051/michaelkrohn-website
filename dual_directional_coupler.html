@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Directional Coupler - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Project separator */
+        .project-separator {
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlights box */
+        .highlights {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlights h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlights p {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation display */
+        .equation {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Dual Directional Coupler</h1>
+            <p class="project-subtitle">RF Circuit Design & Analysis</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Kudos -->
+            <section class="content-section">
+                <div class="quote">
+                    <p>First, let's just give kudos to microwaves101.com. They ain't been slack, and they are definitely awesome!</p>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">RF Design</span>
+                    <span class="tech-tag">Altium Designer</span>
+                    <span class="tech-tag">PCB Layout</span>
+                    <span class="tech-tag">Sonnet Simulation</span>
+                    <span class="tech-tag">VNA Testing</span>
+                    <span class="tech-tag">S-Parameters</span>
+                </div>
+            </section>
+
+            <!-- Setup -->
+            <section class="content-section">
+                <h2>Setup</h2>
+                
+                <p>To be fair, I was told:</p>
+                <div class="quote">
+                    <p>"Pick a project."</p>
+                    <p>"Don't do the coupler."</p>
+                    <p>"Most people pick the other ones."</p>
+                </div>
+
+                <p>We selected the coupler because it looked interesting and it was the road less traveled. We chose Altium for the layout work because we thought the skills we would learn would be valuable. Altium is terrific, but so are other programs (as we later learned). Shout out to Eagle, and PCB123 for those in the PNW who work with Sunstone Circuits (great people, great help, really really good at what they do).</p>
+
+                <h3>Design Criteria</h3>
+                <div class="highlights">
+                    <h3>Project Requirements</h3>
+                    <p>• Choose one from: Wilkinson Divider, Branch-line Coupler, or Directional Coupler</p>
+                    <p>• 1.5" x 1.5" square PCB</p>
+                    <p>• 0.030" thick FR-4 board</p>
+                    <p>• Copper only with 1 oz. Copper</p>
+                    <p>• No solder mask or solder</p>
+                </div>
+
+                <p>We had 6 weeks to complete the design and submit to our vendor of choice (we chose both Sunstone and a now-defunct fab house in China).</p>
+            </section>
+
+            <!-- Methodology -->
+            <section class="content-section">
+                <h2>Methodology</h2>
+
+                <p>Because we were learning as we went along, the layout needed to be done as soon as possible with the best possible information available. Starting with a rough polygon layout from PCB123, and the all-important impedance value of 50 Ohms, the mission had begun. To determine length and width, TXLine was used. The calculation for quarter wavelength is also shown below.</p>
+
+                <div class="image-gallery">
+                    <img src="images/past-projects/txline.avif" alt="TXLine calculations" class="gallery-image">
+                    <img src="images/past-projects/quartwave.avif" alt="Quarter wave calculations" class="gallery-image">
+                </div>
+                <p class="image-caption">TXLine calculations and quarter wavelength determination</p>
+
+                <p>The layout was as follows (using Sonnet Lite and Altium, left to right):</p>
+
+                <img src="images/past-projects/strace.avif" alt="Layout comparison - Sonnet vs Altium" class="project-image">
+                <p class="image-caption">Layout comparison between Sonnet Lite and Altium Designer</p>
+
+                <p>That "S" on the Altium side of the image above was tricky. Truthfully, this wasn't solved for initially - the initial layout and four to five hours of simulation (run, adjust, run, repeat) resulted in the final separation distance. Unfortunately this topic was covered formally during the very last week of the class. I did go back and calculate what the separation distance should have been using the guess-and-check method and found that we were fairly close. Only about 2 mils off from our ideal state at 5.8 GHz.</p>
+
+                <p>Using the full power of Sonnet, additional configurations were simulated but resulted in less-optimal output. Here are a few of the other layouts that were simulated:</p>
+
+                <img src="images/past-projects/options.avif" alt="Alternative layout configurations" class="project-image">
+                <p class="image-caption">Alternative coupler configurations tested during simulation</p>
+
+                <h3>Manufacturing Experience</h3>
+                <p>One rule from class was "broken". This being the first experience with RF circuitry, additional samples were desired for experimentation. A *much* cheaper fab house in China was used to order four additional boards. This particular company does not exist any longer, but I'm really grateful for the extra effort to investigate and procure from here. For six dollars, four additional boards were made, apart from the board ordered from Sunstone.</p>
+
+                <p>Sunstone was absolutely slammed with work at the time and through no fault of their own were not able to deliver some of the boards on time. *Super* lucky to have stumbled across the other fab house, the only worry was lead time. One of many important lessons learned, a simple email inquiry about where a fab house is in their FR-4 run goes a long way. The ability to take advantage of the end of an FR-4 run with some surplus will significantly speed up your project or help make some different decisions. The stars aligned, and the board was delivered on-time.</p>
+
+                <div class="highlights">
+                    <h3>Lesson Learned</h3>
+                    <p>Always ask for the minimum specifications. When you don't do this step, you get boards back that have mask applied (or not), a different backing material than you expected, and some pretty rough cuts where you might not want them.</p>
+                </div>
+
+                <p>Below is the best of what was received, with some added soldering fun for good measure (the connectors were NOT done by me, but by a good friend of mine).</p>
+
+                <img src="images/past-projects/top.avif" alt="Completed PCB with connectors" class="project-image">
+                <p class="image-caption">Final PCB with SMA connectors soldered (connector work by a friend!)</p>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Results</h2>
+
+                <p>After simulating the circuit in Sonnet, a 2-port VNA was used to obtain the S-parameters. After calibration (SOLT!), Coupling, Directivity, Isolation, and Insertion Loss were all measured and compared to the simulated circuit. Only a few of these comparisons are shown here:</p>
+
+                <div class="image-gallery">
+                    <img src="images/past-projects/coupling.avif" alt="Coupling measurement" class="gallery-image">
+                    <img src="images/past-projects/coupling_plot.avif" alt="Coupling vs frequency plot" class="gallery-image">
+                    <img src="images/past-projects/insertion_loss.avif" alt="Insertion loss measurement" class="gallery-image">
+                    <img src="images/past-projects/insertion_loss_vfreq.avif" alt="Insertion loss vs frequency" class="gallery-image">
+                </div>
+                <p class="image-caption">Measurement results: Coupling and Insertion Loss performance</p>
+
+                <h3>Performance Analysis</h3>
+                <p>From the plots above, the circuit achieved Coupling of approximately -26 dB at the design frequency, while the simulation was fairly close at approximately -23 dB. Practically, this means that the circuit couples a small amount to the coupled port and most of the incident power is passed to the output port. If this was used in real life, it could be a useful circuit if a very small portion of the incident power is needing to be sampled.</p>
+
+                <p>On Insertion Loss, the circuit achieved a value of approximately 1.0 dB at the design frequency, while the simulation was somewhat close at -0.89 dB. Practically, not much energy is lost to heat, a result that is expected given there are no active or passive components in this design.</p>
+
+                <p>Isolation and directivity were also close compared to their simulations. Measured Directivity was approximately 3.0 dB (simulated 5.5 dB), which is similar to internet searches for a "typical" 20 dB Coupler at the design frequency. Measured Isolation was -26.8 dB (simulated -28.9 dB), another expected result as the circuit does a poor job of isolating the non-coupled and non-through ports.</p>
+
+                <h3>Improvement Considerations</h3>
+                <p>Considerations for improvement included changing the physical dimensions from square to rounded corners, holding a consistent thickness throughout bends, and tapering connections to the ports would likely change the reflections in a positive way. A better substrate, something like Rogers 4350B, could be used if there were extra dollars to spare for the project.</p>
+
+                <div class="highlights">
+                    <h3>Cost Comparison</h3>
+                    <p>We compared the board from Sunstone to the board from the fab house in China and the results were remarkably similar. The Sunstone board performed very slightly better in all measured ways, but it was more expensive by far.</p>
+                    <p>• China fab house: $28 total for all boards (including connectors!)</p>
+                    <p>• Sunstone board: $168 before connectors were soldered</p>
+                </div>
+
+                <p>In all, this was a fantastic experience. The design process, learning how to measure an RF circuit with a VNA, and finding reasonable results was a very rewarding experience.</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

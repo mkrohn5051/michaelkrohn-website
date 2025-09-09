@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Projects with FreeCAD - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Project separator */
+        .project-separator {
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlights box */
+        .highlights {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlights h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlights p {
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Home Projects with FreeCAD</h1>
+            <p class="project-subtitle">Functional Solutions for Real-World Needs</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>These are some personally interesting projects that I've been able to pull off with some great freeware called FreeCAD. Nothing too fancy to see here, but I really enjoy these kinds of projects.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">FreeCAD</span>
+                    <span class="tech-tag">3D Modeling</span>
+                    <span class="tech-tag">Construction</span>
+                    <span class="tech-tag">Problem Solving</span>
+                    <span class="tech-tag">DIY</span>
+                </div>
+            </section>
+
+            <!-- Project 1: Shed -->
+            <section class="content-section">
+                <h2>Project 1: The Storage Shed</h2>
+                
+                <h3>Setup</h3>
+                <p>A functional need for each of these! I'll start with a shed. My garage, like so many garages, has not yet recovered from Covid, nor has it recovered from two teens that happily toss clothes, backpacks, trash, electronics, basketballs, volleyballs, trash (worth mentioning twice), and other bits they find no immediate need for onto the ground. The teens show no sign of slowing and my only hope of making it through these years is to build a shed to contain some of my tools.</p>
+
+                <h3>Methodology</h3>
+                <p>Five feet deep, eight feet wide, and eight feet tall at its peak. Add one roof and in the near future, a gutter to supply a rainwater collection system. The initial design is shown below:</p>
+
+                <img src="images/past-projects/one.avif" alt="FreeCAD shed design" class="project-image">
+                <p class="image-caption">Initial shed design in FreeCAD - 5'x8'x8' with peaked roof</p>
+
+                <h3>Results</h3>
+                <p>The tricky part was the roof. I definitely could have used a few less pieces, but I store some pretty substantial things in there and I wanted something stout in case I wanted to add onto it later. The base sits on six concrete footings with a small gap between the ground and the bottom. The completed project with one coat of paint.</p>
+
+                <img src="images/past-projects/two.avif" alt="Completed shed construction" class="project-image">
+                <p class="image-caption">The completed shed - functional storage solution for tools and equipment</p>
+
+                <p>The funny white lines all over are where we added acrylic spray over the top of some non-paintable silicon (eyeroll...should have read the package). Another coat of paint for body and trim and it will match the house behind it!</p>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Project 2: Sleeping Pods -->
+            <section class="content-section">
+                <h2>Project 2: Japanese-Inspired Sleeping Pods</h2>
+
+                <h3>Setup</h3>
+                <p>I happen to live closer to my wife's family than I do mine, and the family owns property very near to a lake. The property is great in its own right, but it didn't sleep as many as we would have hoped - extended family, friends, and the occasional birthday party for grandma meant that we needed more beds. Our solution to the lack of space: convert the garage into livable space for four teens PLUS a standalone space for other adults.</p>
+
+                <h3>Methodology</h3>
+                <p>The garage was huge! It required some serious cleanup including moving the 10-foot tall shelving units, some equipment for RV parking, and disabling the garage doors themselves. We then sealed the interior with fancy paint and a rubberized spray for the baseboards. The real work began after that. The design mimics a real life desire to visit Japan one day.</p>
+
+                <div class="image-gallery">
+                    <img src="images/past-projects/three.avif" alt="FreeCAD pod design" class="gallery-image">
+                    <img src="images/past-projects/four.avif" alt="Detailed pod construction plans" class="gallery-image">
+                </div>
+                <p class="image-caption">FreeCAD designs for the sleeping pod system - Japanese capsule hotel inspired</p>
+
+                <p>Each "pod" holds a queen-size mattress and allows for plenty of space when sitting up. We added some basic wiring to each pod too, suitable for small electronics when we are not outside playing in the lake. The implemented design called for joining the 4x4s you see in the middle for structural strength and to save just a tiny bit of space.</p>
+
+                <div class="highlights">
+                    <h3>Construction Scale</h3>
+                    <p>4,800 pounds of material looks like this:</p>
+                </div>
+
+                <img src="images/past-projects/five.avif" alt="4800 pounds of construction materials" class="project-image">
+                <p class="image-caption">The raw materials - 4,800 pounds of lumber and supplies</p>
+
+                <p>A late-night helper with a lot of drywall looks like this:</p>
+
+                <img src="images/past-projects/six.avif" alt="Late night drywall work" class="project-image">
+                <p class="image-caption">Late-night construction work - hanging drywall in the pods</p>
+
+                <h3>Results</h3>
+                <img src="images/past-projects/seven.avif" alt="Completed sleeping pods" class="project-image">
+                <p class="image-caption">The completed pods, sans decoration - teen-approved sleeping solution</p>
+
+                <p>The completed pods, sans decoration. Three weekends later, we had a teen-approved sleeping pod room. The final structure stands 10 feet tall and each pod is lined with drywall and a plywood roof. We found some cheap sticky floor tiles for carpeting to put the mattresses on and to keep splinters to near-zero.</p>
+
+                <p>You can't see the drywall back but trust me, it's there. At the same time, we built an 8x8 foot room that we hang the iron man poster on. It's a little boring to showcase here, but it works great for additional guests. We have since added proper blinds, lots of video games, painted the floors, added furniture, and a fridge for all kinds of things. Later that same month we built an insulating wall and added an AC/Heater split to the wall to keep things cozy.</p>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Project 3: Fence Gate -->
+            <section class="content-section">
+                <h2>Project 3: The Neighbor's Gate</h2>
+
+                <h3>Setup</h3>
+                <p>This project is born from a desire to hang with a darn fine human and his lovely family. If only that pesky fence were more useful...</p>
+
+                <h3>Methodology</h3>
+                <p>Remove one panel, add half back to the bottom. For the top, add two halves. Add hinges, add chain. Add retention mechanism. Enjoy.</p>
+
+                <h3>Results</h3>
+                <div class="quote">
+                    <p>We've enjoyed many grill sessions, cocktails, and laughs here. To my neighbors: Gas grilling rules and my ribs are superior. You've seen it here so it must be true. Just to complete the circle, none of this is possible without two amazing women, our wives, who deal with shenanigans ranging far and wide.</p>
+                </div>
+            </section>
+
+            <!-- Final Thoughts -->
+            <section class="content-section">
+                <h2>Lessons Learned</h2>
+                <p>Each of these projects started with a functional need and evolved into learning experiences. FreeCAD proved invaluable for visualizing designs before putting tool to material, helping avoid costly mistakes and ensuring proper fit.</p>
+
+                <div class="highlights">
+                    <h3>Key Takeaways</h3>
+                    <p>• Planning saves time and materials</p>
+                    <p>• Free software can be incredibly powerful</p>
+                    <p>• Every project teaches something new</p>
+                    <p>• The best projects solve real problems</p>
+                    <p>• Good neighbors make everything better</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

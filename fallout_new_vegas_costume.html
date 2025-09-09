@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fallout New Vegas Costume - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* GitHub link */
+        .github-link {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .github-link:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Fallout New Vegas Costume</h1>
+            <p class="project-subtitle">10-Month Journey: Functional Pip-Boy, Night Vision, and NCR Ranger Combat Armor</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>This is a project that I've wanted to put together for a while, stemming from my deep love and admiration for the Fallout video games. My first love in this series is FO3, but this look from New Vegas is iconic.</p>
+            </section>
+
+            <!-- Setup -->
+            <section class="content-section">
+                <h2>Setup</h2>
+                <p>Make myself look as much like the Wanderer wearing NCR Ranger Combat Armor (sans firearms, of course) as possible! This project starts with the mask, getting the optics and the look just right. I would obviously need the eyes to be red and to include night vision, and I'd strongly prefer the Pip Boy to work.</p>
+                
+                <img src="images/current-work/goal_image.avif" alt="NCR Ranger from Fallout New Vegas - Reference Image" class="project-image">
+                <p class="image-caption">Reference image from the Fallout Wiki - the iconic NCR Ranger look I was aiming for</p>
+
+                <p>I really wanted to have something that I could use to actually navigate with, but a higher priority was to integrate lots of sensors all at once, and for "low" cost. The project started out with me knowing nothing about microcontrollers or Micropython/Circuitpython and there were definitely lots of missteps. I am SO grateful I took my time and didn't let any setbacks dissuade me from the end result.</p>
+                
+                <div class="quote">
+                    <p>I definitely scared some trick-o-treaters and delighted others...totally worth it! I took my time with this one, working in small chunks over 10 months.</p>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section class="content-section">
+                <h2>Methodology</h2>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">Raspberry Pi</span>
+                    <span class="tech-tag">CircuitPython</span>
+                    <span class="tech-tag">3D Printing</span>
+                    <span class="tech-tag">Electronics</span>
+                    <span class="tech-tag">EVA Foam</span>
+                    <span class="tech-tag">Computer Vision</span>
+                </div>
+
+                <p>Starting with the mask, I wanted something that looked as much like the reference as possible. I found a cheap mask online that looked similar and had nearly identical eye shape. At the same time, I ordered an official M1 helmet and a duster that fit (I'm 6'6" and this was no small task).</p>
+
+                <p>While I waited for those to arrive, I set out to figure out how I was going to "see" with the mask on. I wanted to be able to use this in daylight and at night, so I went down a combination of pathways to find the best fit. Night vision and FPV drone goggles filled my search bar. I decided to use a camera system that would mount to the side of the helmet and project the image to two small screens that I would place in front of my eyes.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/night_vision_rpi.avif" alt="Raspberry Pi night vision setup" class="gallery-image">
+                    <img src="images/current-work/night_vision_test.avif" alt="Night vision testing" class="gallery-image">
+                </div>
+                <p class="image-caption">Early proof of concept - getting the Raspberry Pi camera working with night vision</p>
+
+                <p>Enter my first mistake. I assumed at this point that I would use my old Raspberry Pi (because it's small, right?) and some other bits to mount on the side. I had hardware and a quick search of how to use the camera port yielded some a quick win. I'm riding high at this point because I have proof of concept going. I just need to figure out optics.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/tiny_screens.avif" alt="Small OLED screens for the mask" class="gallery-image">
+                    <img src="images/current-work/wire_bundle.avif" alt="Complex wiring setup" class="gallery-image">
+                </div>
+                <p class="image-caption">My initial approach with tiny screens and complex wiring</p>
+
+                <p>I did a lot of research on the wrong thing and wound up with two versions of some really nice small screens. I imagined wearing some magnifying glasses (readers) and combining that with two screens that I would glue or mount to the inside of the mask eyes. I'm a big fan of RPi because this kind of thing is really accessible to a noob like me.</p>
+
+                <img src="images/current-work/testing_lenses.avif" alt="Lens testing setup with cardboard box" class="project-image">
+                <p class="image-caption">Testing different lens configurations using a cardboard box to simulate spacing</p>
+
+                <p>The bottom of the image is the side of the box where I cut a round hole to look through. The middle of the image is the screen, on and working with the lights dimmed. Between the screen and the hole, you can see one of about 100 different lensing schemes that I tried. That's a Fresnel lens which is great if everything is super still and I have a bunch of room between my eyeball and the screen...which I didn't.</p>
+
+                <img src="images/current-work/testing_lenses_2.avif" alt="Advanced lens testing with stacked optics" class="project-image">
+                <p class="image-caption">Getting closer with stacked double convex lenses and reader glasses</p>
+
+                <p>What I didn't understand is exactly how things like Google Glass and other cool products actually work. My screens were enormous compared to what those products had and it wasn't going to be possible to mimic those designs with what I had. It happened that my birthday was right around the corner and I found a killer deal on some AR glasses.</p>
+
+                <img src="images/current-work/glasses.avif" alt="AR glasses solution" class="project-image">
+                <p class="image-caption">The AR glasses that solved my optics problem - plug-and-play solution</p>
+
+                <p>I liked this idea for several reasons: it wasn't crazy expensive (though still pricey), it had an HDMI input, and it would all fit inside my mask with minimal extra padding. My entire lensing issue was now plug-and-play. With a single line of code I turned on the camera and had an image to look at that was super clear.</p>
+            </section>
+
+            <!-- Chest Plate Construction -->
+            <section class="content-section">
+                <h2>Chest Plate Construction</h2>
+                <p>Next up, the chest piece. I had to look around for some good images of this from the game but landed on the classic style you see on the wiki page. I learned a lot about EVA foam, how thick it should be, how to cut it, and how to give it a shiny, hardened, ready-to-paint finish.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/chestplate_lampshade.avif" alt="Using lampshade to draw chest plate arc" class="gallery-image">
+                    <img src="images/current-work/chestplate_carve.avif" alt="Carved chest plate in progress" class="gallery-image">
+                </div>
+                <p class="image-caption">Using a lampshade to get the arc drawn and cut for the chest plate</p>
+            </section>
+
+            <!-- Red Eyes and Mask Fitting -->
+            <section class="content-section">
+                <h2>Red Eyes and Mask Fitting</h2>
+                <p>Back to the mask. With the vision system completed, I needed to get serious about how to pad and adjust the thing so that it would sit on my face in concert with my helmet. I also needed red eyes. I found a great product online that is clear and lets light through but also glows red.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/eyes_before.avif" alt="Mask eyes before modification" class="gallery-image">
+                    <img src="images/current-work/eyes_lit.avif" alt="Red glowing eyes activated" class="gallery-image">
+                </div>
+                <p class="image-caption">Before and after - adding the iconic red glowing eyes</p>
+            </section>
+
+            <!-- Pip-Boy Development -->
+            <section class="content-section">
+                <h2>Pip-Boy Development</h2>
+                <p>In the meantime, my duster and helmet arrived and both fit just fine. I had about two months before Halloween and I really wanted a Pip-Boy... So I started with RPi Pico WH. I figured I was going to power the helmet box with its own portable power bank, so one more couldn't hurt when it came down to it.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/pico_test.avif" alt="Raspberry Pi Pico testing setup" class="gallery-image">
+                    <img src="images/current-work/encoder.avif" alt="Rotary encoder for Pip-Boy control" class="gallery-image">
+                </div>
+                <p class="image-caption">Early Pip-Boy development with Raspberry Pi Pico and rotary encoder</p>
+
+                <p>The Pico is a GREAT device, and it was easy to jump into Circuitpython with some additional peripherals and sensors. The biggest piece of the Pip Boy is arguably the screen, so I spent about $70 on a large-ish screen and got it working right away.</p>
+
+                <img src="images/current-work/test_image.avif" alt="First successful screen test" class="project-image">
+                <p class="image-caption">Success! Getting the main Pip-Boy screen working</p>
+
+                <p>While I was delighted that I could make the screen do things with the rotary encoder, it turns out that the Pico is somewhat limited in flash memory size (2 MB, with 1.6 MB of usable space). I needed lots of different libraries to make the sensors work, and it just didn't have enough room on it to reliably run. I decided on the RP2040 board from Adafruit. It has 8 MB of flash memory, plenty to hold everything I need and a slightly higher performance boost for under $10.</p>
+            </section>
+
+            <!-- Screen Development -->
+            <section class="content-section">
+                <h2>Screen Development</h2>
+                <p>Narrowing down some choices, I needed to determine how many screens and what sort of control over them I wanted. The Pip Boy is controlled with a multi-function rotary encoder that lets the user traverse a complex menu and select different things. While neat to do, I was running out of time and had to go with a flat screen structure, just showing sensor read-outs and other bits on one of four different screens.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/star_calcs.avif" alt="Hand-drawn compass star calculations" class="gallery-image">
+                    <img src="images/current-work/nav_screen.avif" alt="Navigation screen with compass" class="gallery-image">
+                </div>
+                <p class="image-caption">Hand-calculated pixel mappings for compass star and the resulting navigation screen</p>
+
+                <p>The numbers on the left are pixel mappings I used for a compass star, drawn one line at a time. On the right, you can see the compass reading in degrees, plus the heading. I added a SPECIAL screen (from the game) and was able to include a small .jpg image directly from the game.</p>
+
+                <img src="images/current-work/special.avif" alt="SPECIAL screen from Fallout game" class="project-image">
+                <p class="image-caption">The SPECIAL screen - directly from the game for authenticity</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/inventory.avif" alt="Inventory screen" class="gallery-image">
+                    <img src="images/current-work/atmosphere.avif" alt="Atmosphere screen with hand-drawn weather" class="gallery-image">
+                </div>
+                <p class="image-caption">Additional screens: Inventory and Atmosphere (with hand-drawn cloud and sun)</p>
+            </section>
+
+            <!-- Final Assembly -->
+            <section class="content-section">
+                <h2>Final Assembly</h2>
+                <p>I ended up going a different direction than a portable power pack for the power source. Also from Adafruit, the battery available for this board is remarkable. Rechargeable and robust, it was a simple add that I was really happy I went with. I also added a few other bits including a toggle on/off switch and some circuitry to read the battery level.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/pip_box_1.avif" alt="Pip-Boy box assembly step 1" class="gallery-image">
+                    <img src="images/current-work/pip_box_2.avif" alt="Pip-Boy box assembly step 2" class="gallery-image">
+                    <img src="images/current-work/pip_box_3.avif" alt="Pip-Boy box assembly step 3" class="gallery-image">
+                </div>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/pip_box_4.avif" alt="Pip-Boy box assembly step 4" class="gallery-image">
+                    <img src="images/current-work/pip_box_final.avif" alt="Final Pip-Boy assembly" class="gallery-image">
+                </div>
+                <p class="image-caption">Pip-Boy packaging progression from components to final wearable device</p>
+
+                <p>The final configuration included an Adafruit RP2040 board, a rechargeable battery, an IMU chip that included a magnetometer for heading and direction (after calibration), and a BME680 chip that added temperature, pressure, and some other bits. I added a battery level indicator to finish things off.</p>
+            </section>
+
+            <!-- Helmet Integration -->
+            <section class="content-section">
+                <h2>Helmet Integration Challenge</h2>
+                <p>The form factor problem came back to bite me on the last step. It was October 30th and a half and I needed to stuff everything into an oversized box that I bought for the helmet mounted gear. I also didn't have a solid plan for attaching the box to the side of the helmet...which is too nice to drill through.</p>
+
+                <p>I ended up ditching the metal ear and magnets and went with a foam block attached to the side of the helmet. I formed it to the helmet and added velcro to the outside of the form to form a "platform" for the bottom of the box to stick to it. It worked beautifully!</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/helmet_cam.avif" alt="Camera mounted on helmet side" class="gallery-image">
+                    <img src="images/current-work/full_headgear.avif" alt="Complete helmet with all electronics" class="gallery-image">
+                </div>
+                <p class="image-caption">Final helmet setup - looks insane but works perfectly!</p>
+
+                <p>This looks insane, I know. I would absolutely love a re-do and a few hundred more dollars to get it to a little more respectable shape but I am so delighted with how it turned out.</p>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Results</h2>
+                <p>Approximately 1000 cans of Diet Coke after I started, I made the deadline of Halloween! There are some obvious flaws, the most obvious in my mind is the facemask-helmet overlap. I had to add padding to the mask to make room for the glasses and the helmet only goes out so far.</p>
+
+                <p>You can see the spray paint on the chest piece that I wasn't able to show earlier...that turned out well. The stencil was easy to make and applying a heat gun to the EVA foam before painting made the difference in the final look.</p>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/results_1.avif" alt="Final costume result 1" class="gallery-image">
+                    <img src="images/current-work/results_2.avif" alt="Final costume result 2" class="gallery-image">
+                    <img src="images/current-work/results_3.avif" alt="Final costume result 3" class="gallery-image">
+                    <img src="images/current-work/results_4.avif" alt="Final costume result 4" class="gallery-image">
+                </div>
+
+                <div class="image-gallery">
+                    <img src="images/current-work/results_5.avif" alt="Final costume result 5" class="gallery-image">
+                    <img src="images/current-work/results_6.avif" alt="Final costume result 6" class="gallery-image">
+                    <img src="images/current-work/results_7.avif" alt="Final costume result 7" class="gallery-image">
+                    <img src="images/current-work/results_8.avif" alt="Final costume result 8" class="gallery-image">
+                </div>
+                <p class="image-caption">The complete Fallout New Vegas costume - 10 months of work culminating in Halloween success!</p>
+
+                <div class="quote">
+                    <p>Lastly, my wife deserves a huge shoutout. Thank you for putting up with a totally destroyed living room for so long!</p>
+                </div>
+
+                <a href="https://github.com/mkrohn5051/PipBoyMarkI.git" class="github-link" target="_blank">
+                    View Pip-Boy Code on GitHub →
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

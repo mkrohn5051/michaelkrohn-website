@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNIST Handwritten Digits - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Project separator */
+        .project-separator {
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlights box */
+        .highlights {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlights h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlights p {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation display */
+        .equation {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">MNIST Handwritten Digits</h1>
+            <p class="project-subtitle">Machine Learning with Naive Bayes Classifier</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>This is a Machine Learning project done in Matlab. It's a classic handwritten digit recognition problem using the MNIST database.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">MATLAB</span>
+                    <span class="tech-tag">Machine Learning</span>
+                    <span class="tech-tag">Naive Bayes</span>
+                    <span class="tech-tag">MNIST Dataset</span>
+                    <span class="tech-tag">Classification</span>
+                    <span class="tech-tag">Image Processing</span>
+                </div>
+            </section>
+
+            <!-- Setup -->
+            <section class="content-section">
+                <h2>Setup</h2>
+
+                <p>The major tasks with this project was to build a Naive Bayes Classifier model, train a dataset, and apply the model to a holdout set of data. Once the supplied data was consumed, we were to submit our own handwritten digits to be evaluated by the model.</p>
+
+                <div class="highlights">
+                    <h3>Project Objectives</h3>
+                    <p>• Build a Naive Bayes Classifier from scratch</p>
+                    <p>• Train the model on the MNIST training dataset</p>
+                    <p>• Test on holdout data to evaluate performance</p>
+                    <p>• Submit custom handwritten digits for classification</p>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section class="content-section">
+                <h2>Methodology</h2>
+
+                <h3>Feature Engineering</h3>
+                <p>To develop the classifier, single pixels were used as features. There are alternative ways to do this, but using each pixel as a feature seemed to allow for straight-forward application of the model to the training and test sets. For the training set, each image was read into Matlab and each pixel was given a 1 if it was above a threshold of 128 and a 0 if it was below. This halfway point between 0 and 255 was selected somewhat arbitrarily, and it was used as a starting point. With the images now converted to an array of 1s and 0s, a vector was then created for each image.</p>
+
+                <h3>Probability Calculation</h3>
+                <p>The probability of each image was calculated, then each vector was combined into a 784 x 60000 matrix and the label for each was determined by identifying the column index of the corresponding label file and applying it to the image matrix. The vectors were then grouped according to label. A probability matrix was generated by summing the number of ones in each vector row, then dividing by the total number of images for that label, resulting in a 784 x 10 matrix. Lastly, a Laplacian smoothing factor was applied to the probability matrix to ensure no zeros existed.</p>
+
+                <p>The probability was calculated by comparing each test image to each column in the probability matrix. Each test image was selected and put into binary vector format. The probability was calculated by multiplying together the values from each column of the probability matrix in a specific pattern. This is shown by the equation below, where PMV = probability matrix value:</p>
+
+                <img src="images/past-projects/prob1.avif" alt="Probability calculation equation" class="project-image">
+                <p class="image-caption">Probability calculation formula for Naive Bayes classification</p>
+
+                <p>Repeating this for all labels yielded a 1 x 10 matrix, accounting for all possible outcomes. A logic check for the highest value was implemented, followed by a rule to accept the first highest value to determine the predicted label. An example of the confusion matrix generated for the test data is shown below:</p>
+
+                <img src="images/past-projects/conf_matrix.avif" alt="Confusion matrix for digit classification" class="project-image">
+                <p class="image-caption">Confusion matrix showing classification performance across all digits</p>
+
+                <p>I really like confusion matrices because of their simplicity. It's clear there is trouble with 4/9 and 5/3, and this makes sense given just how similar these number pairs are. Taking a sample of each of these pairs and comparing it to the odds ratio for the combination is shown below:</p>
+
+                <img src="images/past-projects/digees.avif" alt="Sample digit comparisons" class="project-image">
+                <p class="image-caption">Sample digits showing common misclassification pairs (4/9 and 5/3)</p>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Results</h2>
+
+                <p>The model prediction accuracy was 84.6% with optimized smoothing and binary threshold values. Not super great results, but on-par with industry standard for a Bayesian classifier without any other bells and whistles. Accuracy improves a bit when the smoothing factor is changed, and further improvements can be realized when the threshold is lowered (slightly). I suspect that a unique smoothing factor per digit would further improve the results seen here.</p>
+
+                <div class="highlights">
+                    <h3>Performance Summary</h3>
+                    <p>• Final accuracy: 84.6%</p>
+                    <p>• Binary threshold: 128 (0-255 scale)</p>
+                    <p>• Laplacian smoothing applied</p>
+                    <p>• Common misclassifications: 4/9 and 5/3 pairs</p>
+                    <p>• Performance comparable to standard Naive Bayes implementations</p>
+                </div>
+
+                <h3>Analysis & Insights</h3>
+                <p>In all, the Naive Bayes classifier seems to be a reasonable starting point in classifying these kinds of images under these conditions. It would be interesting to do this project again with groups of pixels instead of single pixels to see if distinguishing characteristics can be drawn from the data that way. Other classifiers would be interesting to implement as well.</p>
+
+                <div class="quote">
+                    <p>In all, a great way to see the underpinnings of the Naive Bayes classifier outside of a Python module!</p>
+                </div>
+
+                <h3>Future Improvements</h3>
+                <p>Several potential enhancements could improve the classifier's performance:</p>
+                <p>• Individual smoothing factors per digit class rather than a global factor</p>
+                <p>• Feature extraction using groups of pixels instead of single pixels</p>
+                <p>• Different threshold values optimized per digit</p>
+                <p>• Implementation of other classification algorithms for comparison</p>
+                <p>• Data augmentation techniques to expand the training set</p>
+            </section>
+
+            <!-- Lessons Learned -->
+            <section class="content-section">
+                <h2>Lessons Learned</h2>
+                
+                <p>This project provided valuable hands-on experience with the fundamentals of machine learning classification. Building the Naive Bayes classifier from scratch in MATLAB gave deep insights into how probability-based classification works at its core.</p>
+
+                <p>The confusion matrix analysis revealed the intuitive challenge that even humans face - distinguishing between visually similar digits like 4/9 and 5/3. This reinforced the importance of feature engineering and the potential benefits of more sophisticated preprocessing techniques.</p>
+
+                <p>Working directly with the MNIST dataset and implementing the mathematical foundations without relying on pre-built libraries provided a solid understanding of the underlying algorithms that power modern machine learning frameworks.</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

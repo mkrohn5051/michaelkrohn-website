@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain and LLMs - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* GitHub link */
+        .github-link {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .github-link:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .highlight-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* Cost breakdown */
+        .cost-breakdown {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .cost-breakdown h4 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">LangChain and LLMs</h1>
+            <p class="project-subtitle">Building RAG Systems: From Google Quarterly Reports to Intelligent Document Chains</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>I'm a huge fan of ByteByteGo and a few weeks ago there was an example that took public quarterly reports from Google's parent company, tokenized them, vectorized/embedded them, added them to a database, then used a LLM to interact with it. There are lots of other examples of then taking the same model and having the chain perform a task.</p>
+
+                <div class="highlight-box">
+                    <h3>Real-World Application Potential</h3>
+                    <p>Honestly, I was so excited to start this project because I can think of several ways to deploy this. Using our own data to generate insights, but then potentially triggering decisions or a cascade of decisions seems like an intriguing value proposition.</p>
+                </div>
+            </section>
+
+            <!-- Setup -->
+            <section class="content-section">
+                <h2>Setup</h2>
+                <p>The reference above to ByteByteGo was the main driver for this, but I had to learn quite a bit about vector databases, encoding, and API keys. These aren't difficult subjects but the combination and nuance to some of the elements left me a bit frustrated at times. There isn't too much code at all, so the focus for me was on the understanding of each step and how the external bits work together to create the chain.</p>
+
+                <p>A key challenge for me was determining whether or not I wanted to pay for a small amount of OpenAI data. There are other ways to do this, but I hadn't yet had a chance to play with sizing a project to protect my wallet, so I dove in.</p>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">LangChain</span>
+                    <span class="tech-tag">OpenAI API</span>
+                    <span class="tech-tag">Pinecone</span>
+                    <span class="tech-tag">Vector Databases</span>
+                    <span class="tech-tag">RAG</span>
+                    <span class="tech-tag">Python</span>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section class="content-section">
+                <h2>Methodology</h2>
+                <p>The example takes public quarterly reports from Google and saves them all locally as .pdfs. I had to upgrade my Python version from 3.8 to 3.8.1 to make all of the bits work together, but that's fairly straightforward as long as you don't accidentally load the 32-bit version of 3.8.1 and wonder what in the heck is going on. The cool kids all use virtual environments to do these kinds of things, so I'll be setting that up after this project.</p>
+
+                <p>With the .pdfs downloaded, I load them all into a "loader" object that then gets split up into chunks. Yes chunks. I like that name - it's utilitarian and its functional. This turned out to be a key element for me because considering the free tier of OpenAI meant that I had to think through optimization (fortunately later in the project and I was able to progress up to that point, but regardless...) choices. This is the first one. The chunk size ultimately impacts how many vectors are loaded into the database AND how large each vector is. We'll come back to this.</p>
+
+                <p>I tried several sizes: 500, 1000, 2000, and 19880. That last one is a bit random but I was working with some datasheets that keyed me in on the number 60 as the number of requests per minute I wanted to achieve. I was going to do this by batching in nice round increments of something, and the way it worked out was my chunk size had to be 19880. Funny story though - if you're going to pay for data, none of that mattered. I spent $0.28 in the end, so luckily it was trivial. Still a worthwhile exercise when considering deployment models in different scenarios.</p>
+
+                <div class="cost-breakdown">
+                    <h4>Cost Analysis Experiment</h4>
+                    <div class="cost-item">
+                        <span>Chunk size 19880:</span>
+                        <span>$0.36</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Chunk size 500:</span>
+                        <span>$7.53</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Final actual cost:</span>
+                        <span>$0.28</span>
+                    </div>
+                </div>
+
+                <p>The next two steps were to 1. Obtain a Pinecone index (and API keys) and 2. Obtain OpenAI API keys. Pinecone is totally free and this process was easy. OpenAI can be free with careful optimization, but in the end I chose to pay a bit (for the record, I did try other encoders - Universal Sentence Encoder, SentencePiece, and a few others). With the keys sorted out, I explored the data a bit. A list of data chunks is generated and they need to be strings for further processing.</p>
+
+                <p>I then went down a rabbit hole to explore the string types, how to check for strings, and how to convert these if I needed to. Once I encoded things with "cl100k_base" and "text-embedding-ada-02", the data was even more interesting to explore. I compared the length of the encoder results to the original chunked document, found the index and verified all was correct. Lots of opportunities for functions in there.</p>
+
+                <p>I then did some calculations to try and get a feel for how much this process would cost me. At the aforementioned chunk size of 19880, I calculated a cost of $0.36. When the chunk size was 500, the cost went up to $7.53. All of this information is found on OpenAI's <em>superb</em> documentation pages.</p>
+
+                <p>The next step was to use OpenAIEmbeddings to embed the data, line up API keys, and send it! I ultimately decided to include a batch size of 50 to try to optimize the load on the OpenAI end, and that was the trick in the end. Fortunately I came in under my expected cost and I know there is more optimization to do that would push the cost even lower. For these purposes though, I'm ok with under $0.30.</p>
+
+                <p>I then tried a cosine similarity search and returned data successfully.</p>
+
+                <p>Next up was the LLM integration. ChatGPT is called by setting the llm parameter to "ChatOpenAI()", which is a better way to go than "OpenAI()" all by itself. Next up was simply constructing the query with RetrievalQA to both pose the query and run the result.</p>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Results</h2>
+                <p>I was so excited when this started working that I didn't even care that the result was "I don't know", an artifact of setting llm = OpenAI() instead of how I described above. This simple adjustment yielded:</p>
+
+                <img src="images/current-work/jupyter_notebook_image.avif" alt="Successful LangChain query results in Jupyter notebook" class="project-image">
+                <p class="image-caption">Success! The LangChain system working with Google quarterly reports</p>
+
+                <p>The working principle is the cosine similarity searched for the query among the vectors in Pinecone. From the BBG example directly:</p>
+
+                <img src="images/current-work/embedding_space_image.avif" alt="Vector embedding space visualization" class="project-image">
+                <p class="image-caption">Visualization of how the vector embedding space works for similarity search</p>
+
+                <div class="quote">
+                    <p>What's really neat to me is that this isn't all there is to the chain. From here, one can send an email, trigger an action, update data, or make an informed decision, which is what I suppose this is really all about.</p>
+                </div>
+
+                <p>I am going to try some of these options, likely by calling a Python instance and performing some actions automatically. In my view, there is an appreciable amount of potential to apply this to real-world scenarios.</p>
+
+                <div class="highlight-box">
+                    <h3>Project Success</h3>
+                    <p>In the end I am delighted to have had a reason to generate my own private keys, pay a little money to get a thing done, and to have learned an incredible amount of new information about a tool that I just read about in an email.</p>
+                </div>
+
+                <a href="https://github.com/mkrohn5051/langchain_simple_example.git" class="github-link" target="_blank">
+                    View LangChain Code on GitHub →
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

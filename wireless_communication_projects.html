@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireless Communication Projects - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Project separator */
+        .project-separator {
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlights box */
+        .highlights {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlights h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlights p {
+            margin-bottom: 1rem;
+        }
+
+        /* Equation display */
+        .equation {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Wireless Communication Projects</h1>
+            <p class="project-subtitle">Signal Processing & Channel Modeling in MATLAB</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <div class="quote">
+                    <p>These two projects were my favorite. I was incredibly lucky to study with TG, who is quite possibly the best instructor there ever was.</p>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">MATLAB</span>
+                    <span class="tech-tag">Signal Processing</span>
+                    <span class="tech-tag">BPSK/QPSK/DBPSK</span>
+                    <span class="tech-tag">Rayleigh Fading</span>
+                    <span class="tech-tag">Jake's Model</span>
+                    <span class="tech-tag">Diversity Systems</span>
+                    <span class="tech-tag">Alamouti Coding</span>
+                </div>
+            </section>
+
+            <!-- Project 1: Receiver Performance -->
+            <section class="content-section">
+                <h2>Project 1: Receiver Performance in Noise & Fading Channels</h2>
+
+                <h3>Setup</h3>
+                <div class="highlights">
+                    <h3>Project Objectives</h3>
+                    <p>• Conduct simulations of receivers in white noise channels to verify performance, as measured by symbol error rate versus SNR curves</p>
+                    <p>• Compare simulated performance to theoretical performance</p>
+                    <p>• Simulate BPSK receiver performance in Rayleigh flat-fading channels</p>
+                    <p>• Use Jake's model to simulate a Rayleigh flat-fading channel</p>
+                </div>
+
+                <h3>Methodology</h3>
+                <p>Assuming coherent detection and perfect estimation by the receiver, the following equations for BPSK, QPSK, and DBPSK were used to predict theoretical performance:</p>
+
+                <img src="images/past-projects/psbpsk_one.avif" alt="BPSK theoretical equations" class="project-image">
+                <p class="image-caption">Theoretical performance equations for BPSK, QPSK, and DBPSK modulation schemes</p>
+
+                <p>For a binary scheme, Eb = Es and the formula for symbol error probability and bit error probability are equal. Signals were randomly generated for BPSK as ±1. QPSK signals were randomly generated as ±1±j, and DBPSK signals were randomly generated as 0 or 1. Noise was then generated by determining the square root of the variance σ, for each scheme, as shown below:</p>
+
+                <img src="images/past-projects/snr_linear.avif" alt="SNR and noise variance relationships" class="project-image">
+                <p class="image-caption">SNR calculations and noise variance relationships for simulation</p>
+
+                <p>Sigma was then multiplied by real Gaussian noise. Complex noise was generated for QPSK and DBPSK (non-complex noise was generated for BPSK). Signals were combined and the thresholds were determined based on potential outcomes. For the two BPSK schemes, the received signal was compared element-wise to the generated signal and any time they were not equal, it was counted as an error. Similarly for QPSK, the real and imaginary parts of the signals were compared element-wise to the generated signal and inequalities were counted as errors. The error counts were then used to determine SER.</p>
+
+                <p>For DBPSK, the original signal of 0 or 1 was first differentially encoded. Zeros were then changed to ±1 before complex noise was added, then the comparison to the original signal was performed with the threshold to determine SER. Also unique to DBPSK, the complex conjugate of the detector input was taken with the prior value to determine the comparator signal. This was done with the intention of representing the structure of a DBPSK receiver that compares the received value with its predecessor to determine whether a difference was transmitted.</p>
+
+                <h3>Rayleigh Fading Channel</h3>
+                <p>To address the second problem, the following equation was used to model Rayleigh fading:</p>
+
+                <img src="images/past-projects/psrayleigh.avif" alt="Rayleigh fading equations" class="project-image">
+                <p class="image-caption">Rayleigh fading channel model equations</p>
+
+                <p>To address the last problem, the sum of sinusoids method was used:</p>
+
+                <img src="images/past-projects/fk_betak.avif" alt="Jake's model parameters" class="project-image">
+                <p class="image-caption">Jake's model parameters for channel simulation</p>
+
+                <p>For the fading channel, the real and imaginary components were found using the following equations:</p>
+
+                <img src="images/past-projects/fading_channel.avif" alt="Fading channel components" class="project-image">
+                <p class="image-caption">Real and imaginary components of the fading channel model</p>
+
+                <h3>Results</h3>
+                <p>The left image below shows the SER (theory versus simulated) for BPSK, QPSK, and DBPSK. The center image below shows the SER (theory versus simulated) for a Rayleigh flat-fading channel (compared to BPSK for reference). The right image below shows the autocorrelation of the Jake's Model prediction and the simulation:</p>
+
+                <div class="image-gallery">
+                    <img src="images/past-projects/ser1.avif" alt="SER comparison for modulation schemes" class="gallery-image">
+                    <img src="images/past-projects/rayleigh.avif" alt="Rayleigh fading performance" class="gallery-image">
+                    <img src="images/past-projects/jakes.avif" alt="Jake's model autocorrelation" class="gallery-image">
+                </div>
+                <p class="image-caption">Performance results: SER comparison, Rayleigh fading effects, and Jake's model validation</p>
+
+                <p>In all of the cases, the simulated versus theoretical plots align fairly well. For the SER plot on the left (above), the sample rate has a significant impact on performance - decreasing the number of samples worsens performance as SNR is increased. The SER plot of the Rayleigh flat-fading channel shows the true meaning of "flat-fading" - the SER as SNR is increased is nearly unchanged compared to BPSK. Finally, the plot on the right (above) shows that the correlation of model versus prediction aligns very well, and is ultimately very similar to a Bessel function.</p>
+
+                <p>In all, this was a great exercise to map the received signal under basic conditions. Generally, as SNR increases, the error rate decreases for the schemes tested here. In the real world however, many more conditions require accounting for under different receive schemes (64-QAM, for example).</p>
+
+                <p>This project taught me so much about signal reception, channel modeling, and performance as well as new ways to utilize the power of Matlab.</p>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Project 2: Diversity Systems -->
+            <section class="content-section">
+                <h2>Project 2: Transmit & Receive Diversity Systems</h2>
+
+                <h3>Setup</h3>
+                <p>In the second project, I explored two types of diversity - Receive and Transmit. These again were compared, pitting simulation versus model predictions using signals generated from Matlab. BPSK and QPSK modulation was used and receive diversity was evaluated using Selection Combining, Maximal Ratio Combining, and Equal Gain Combining. Transmit diversity was evaluated using Maximal Ratio Transmission and the Alamouti space-time coding scheme.</p>
+
+                <h3>Methodology</h3>
+                <p>Assuming again coherent detection with perfect receiver estimation, we add to the list of assumptions: 1. the average power of the channel gain is equal to 1, and 2. the SER performance of the receivers would be conducted by simulating samples at the output of the correlator receiver, with bit energy equal to 1.</p>
+
+                <p>Signals and noise were generated in the same way as presented in the first project (including variance) and won't be duplicated here.</p>
+
+                <p>The vector of the complex channel gain of each independent path over Rayleigh fading was modeled as shown in the first equation below, followed by the general model equation:</p>
+
+                <div class="image-gallery">
+                    <img src="images/past-projects/h_y.avif" alt="Channel gain vector" class="gallery-image">
+                    <img src="images/past-projects/yalone.avif" alt="General model equation" class="gallery-image">
+                </div>
+                <p class="image-caption">Channel modeling equations for diversity system analysis</p>
+
+                <h3>Receive Diversity Techniques</h3>
+                
+                <p><strong>Selection Combining (SC)</strong> receiver diversity selects the received channel with the highest SNR and runs with it. This means that no channel information is needed for this method. For a single channel, the SER is quite similar to a Rayleigh fading channel but for more than one channel, the SNR was calculated to find the highest value before determining the Bit Error Rate. Given the assumptions stated above, plus the noise being zero-mean and Gaussian distributed, the noise was assumed to be relatively equal for all branches. For SC, we simply pick the highest SNR.</p>
+
+                <p><strong>Maximal Ratio Combining (MRC)</strong> creates a combined weighted sum of each branch for each number of antennas. As this requires knowledge of the channel at the receiver, it's a bit more complicated. Each branch is weighted with the conjugate of the complex gain of each branch. The applied weight was determined through instantaneous SNR analysis. The Cauchy-Schwarz inequality was used to find that the SNR is maximum when wH = hH. We then co-phase the signals by taking the conjugate of the channel gain as the weight and combining the signals together. This sum maximizes SNR.</p>
+
+                <p><strong>Equal Gain Combining (EGC)</strong> receive diversity is different from MRC in that it does not estimate the SNR for each received signal. Instead, EGC co-phases each branch, then combines branches with unity gain.</p>
+
+                <h3>Transmit Diversity Techniques</h3>
+
+                <p><strong>Maximal Ratio Transmission (MRT)</strong> takes advantage of knowledge of the channel at the transmitter. The signal is multiplied by the square root of the summed magnitude of each channel gain, then squared. Normalization is required to ensure the power transmitted is divided equally. Sort of like making sure that each teen-ager gets the same amount of stuff (M&Ms, popcorn, t-shirts, rides, etc. etc. etc.). MRT theoretical performance is modelled by using MRC because of the channel knowledge known early on.</p>
+
+                <p><strong>Alamouti Space-Time Coding:</strong> For Alamouti, the channel is unknown at the transmitter. One way to achieve transmit diversity is to utilize Alamouti space-time coding. This coding transmits a combination of the first and second signal over two time periods, with the assumption that the channel is constant over the time periods. When the transmission is received, the receiver forms a vector with the two signals. The receiver multiplies the combined signal with a matrix, resulting in a decoupling of the two symbol transmissions. The final form is as follows:</p>
+
+                <img src="images/past-projects/zi.avif" alt="Alamouti decoupling equation" class="project-image">
+                <p class="image-caption">Alamouti space-time coding decoupling equations</p>
+
+                <p>There is a penalty of 3 dB to pay due to the receive SNR being equal to the total SNR from each branch, divided by 2.</p>
+
+                <h3>Results</h3>
+                <p>For brevity, the plot below shows the simulated versus theoretical performance for BPSK modulation receive diversity using SC, MRC, and EGC on the left. On the right, simulated versus theoretical performance for BPSK modulation using transmit diversity (MRT and Alamouti coding) is shown.</p>
+
+                <div class="image-gallery">
+                    <img src="images/past-projects/bpsk.avif" alt="BPSK receive diversity performance" class="gallery-image">
+                    <img src="images/past-projects/alamouti.avif" alt="Alamouti and MRT performance" class="gallery-image">
+                </div>
+                <p class="image-caption">Diversity system performance: Receive diversity (left) and transmit diversity (right)</p>
+
+                <p>These plots (in combination with the individual performance plots) show that transmit and receive diversity methods are employed to lower the probability of deep fading on channels simultaneously when a signal is received. This means that reliability can be improved and "good" performance can be achieved with the proper technique (in terms of SER) on the transmit and receive sides.</p>
+
+                <p>If the channel information is unknown, Alamouti space-time coding performs within 3 dB of MRT, allowing for a simple and clever way to realize good performance.</p>
+
+                <div class="highlights">
+                    <h3>Key Insights</h3>
+                    <p>• Diversity techniques significantly improve reliability in fading channels</p>
+                    <p>• MRC provides optimal performance when channel information is available</p>
+                    <p>• Alamouti coding offers near-optimal performance without channel knowledge</p>
+                    <p>• Selection combining provides good performance with minimal complexity</p>
+                </div>
+            </section>
+
+            <!-- Final Thoughts -->
+            <section class="content-section">
+                <h2>Reflection</h2>
+                
+                <p>My biggest takeaway from these projects is the appreciation of projects like the Voyager space program and others that had to have an answer for reliable transmission of information across large distances. These concepts have been around for a long time and I am in total awe...</p>
+
+                <p>My growing interest in this field has led to some Software Defined Radio projects, which I'll add to the site in the future.</p>
+
+                <div class="quote">
+                    <p>The mathematical elegance of diversity systems and their practical impact on communication reliability showcases the beautiful intersection of theory and real-world engineering challenges.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Processing Project - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Project separator */
+        .project-separator {
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlights box */
+        .highlights {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlights h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlights p {
+            margin-bottom: 1rem;
+        }
+
+        /* Parameters box */
+        .parameters {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .parameters h4 {
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+
+        .parameters ul {
+            list-style-position: inside;
+            color: #6c757d;
+        }
+
+        .parameters li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Signal Processing Projects</h1>
+            <p class="project-subtitle">ECG Signal Filtering & Speech Synthesis</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>Two fascinating projects in signal processing: extracting a clean ECG signal from noisy data and creating a speech synthesis system using all-pole modeling. Both projects demonstrate the power of digital signal processing techniques in solving real-world problems.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">MATLAB</span>
+                    <span class="tech-tag">Digital Signal Processing</span>
+                    <span class="tech-tag">Filter Design</span>
+                    <span class="tech-tag">Speech Synthesis</span>
+                    <span class="tech-tag">ECG Processing</span>
+                </div>
+            </section>
+
+            <!-- Project 1: ECG Signal Processing -->
+            <section class="content-section">
+                <h2>Project 1: ECG Signal Extraction</h2>
+                
+                <h3>Setup</h3>
+                <p>A signal was supplied that closely mimicked an ECG signal with powerline noise included. The assumption was that this was 60 Hz noise. Three filters were to be designed to reduce the noise and extract a classic, made-for-TV style ECG signal. The final task was to determine the average heart rate and heart rate variability.</p>
+
+                <img src="images/past-projects/initial_signal.avif" alt="Original noisy ECG signal" class="project-image">
+                <p class="image-caption">The original signal with 60 Hz powerline interference</p>
+
+                <h3>Methodology</h3>
+                <p>Upon first glance, the real signal was clearly visible beneath the noise. The magnitude spectrum confirmed the 60 Hz interference assumption:</p>
+
+                <img src="images/past-projects/mag_spectrum.avif" alt="Magnitude spectrum showing 60 Hz peak" class="project-image">
+                <p class="image-caption">Magnitude spectrum revealing the 60 Hz powerline interference</p>
+
+                <p>To eliminate the powerline interference, a second order IIR notch filter was designed. A k-factor was required to maintain unity gain at zero Hz:</p>
+
+                <img src="images/past-projects/kfactor1.avif" alt="K-factor calculation formula" class="project-image">
+                <p class="image-caption">K-factor calculation for maintaining proper gain characteristics</p>
+
+                <p>Applying the notch filter to the original signal significantly improved the signal quality:</p>
+
+                <img src="images/past-projects/original_ecg.avif" alt="ECG after notch filtering" class="project-image">
+                <p class="image-caption">ECG signal after notch filtering - the game is afoot!</p>
+
+                <p>Next, a Chebyshev II Lowpass Filter was designed and applied to the notch-filtered signal:</p>
+
+                <div class="parameters">
+                    <h4>Chebyshev II Lowpass Filter Parameters:</h4>
+                    <ul>
+                        <li>Passband Ripple: 6 dB</li>
+                        <li>Stopband Attenuation: 50 dB</li>
+                        <li>Passband Edge Frequency: 50 Hz / 0.40 (Normalized)</li>
+                        <li>Stopband Edge Frequency: 60 Hz / 0.48 (Normalized)</li>
+                        <li>Filter Order: 8</li>
+                    </ul>
+                </div>
+
+                <p>Experimenting with the parameters revealed important tradeoffs - as ripple increased, roll-off worsened given the same stopband attenuation and edge frequencies. To preserve the steepest roll-off with the smallest filter order, the passband ripple was kept at 6 dB.</p>
+
+                <img src="images/past-projects/notch_filter.avif" alt="Signal after lowpass filtering" class="project-image">
+                <p class="image-caption">ECG signal after applying the Chebyshev II lowpass filter</p>
+
+                <p>The final step addressed DC signal and low frequency baseline wander using a Chebyshev II High Pass filter:</p>
+
+                <div class="parameters">
+                    <h4>Chebyshev II High Pass Filter Parameters:</h4>
+                    <ul>
+                        <li>Passband Ripple: 5 dB</li>
+                        <li>Stopband Attenuation: 50 dB</li>
+                        <li>Passband Edge Frequency: 0.8 Hz (Normalized)</li>
+                        <li>Stopband Edge Frequency: 0.7 Hz (Normalized)</li>
+                        <li>Filter Order: 8</li>
+                    </ul>
+                </div>
+
+                <img src="images/past-projects/cheby_to_highpass.avif" alt="Signal after high pass filtering" class="project-image">
+                <p class="image-caption">ECG signal after applying the high pass filter</p>
+
+                <h3>Results</h3>
+                <p>The filtering stages produced a signal close to the goal, with distinctive PQRST peaks and valleys visible. While technically meeting the requirements, further optimization was pursued. By adjusting parameters and using MATLAB's 'filtfilt' command instead of 'filter', the frequency-dependent delay was eliminated, producing a much cleaner result:</p>
+
+                <img src="images/past-projects/cheby_to_HP_two.avif" alt="Final optimized ECG signal" class="project-image">
+                <p class="image-caption">Final optimized ECG signal - much closer to the TV-quality ECG we were aiming for</p>
+
+                <p>While not entirely practical due to the delay removal (delays are real and necessary with IIR filters), this approach achieved the desired visual result much closer to what one would see on medical television shows.</p>
+
+                <div class="highlights">
+                    <h3>Heart Rate Analysis Results</h3>
+                    <p>Using proximity-adjusted peak detection on the filtered signal:</p>
+                    <p><strong>Heart Rate:</strong> 66.3 BPM</p>
+                    <p><strong>Heart Rate Variability:</strong> 1562.5 ms (1105.6 ms RMS)</p>
+                    <p>These values indicate a person age 30 or greater in relatively good health.</p>
+                </div>
+
+                <img src="images/past-projects/prox_peaks.avif" alt="Proximity-adjusted peaks for heart rate calculation" class="project-image">
+                <p class="image-caption">Proximity-adjusted peaks used for heart rate and variability calculations</p>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Project 2: Speech Synthesis -->
+            <section class="content-section">
+                <h2>Project 2: Speech Synthesis</h2>
+
+                <h3>Setup</h3>
+                <p>The speech synthesis project required creating an all-pole model of a speech signal. A speech signal was analyzed and represented by all-pole filter parameters, which were then used to synthesize the original speech. The test phrase was "The empty flask stood on a tin tray."</p>
+
+                <h3>Methodology</h3>
+                <p>Key assumptions included treating short speech segments as wide-sense-stationary processes. "Voiced" and "Unvoiced" sounds were determined using a threshold of 20% of the maximum autocorrelation value.</p>
+
+                <p>The audio signal was sampled at 8000 Hz. Through trial and error, a segment from 1700:1900 was identified as a vowel sound (the "e" from the second word). The autocorrelation of this segment revealed the pitch at 51 samples:</p>
+
+                <img src="images/past-projects/autocorrelation_segment.avif" alt="Autocorrelation showing pitch period" class="project-image">
+                <p class="image-caption">Autocorrelation of the vowel segment showing clear pitch periodicity at 51 samples</p>
+
+                <p>A custom pitch detection function was developed that included a 10th order FIR filter, DC removal, center clipping (75% threshold), autocorrelation analysis, and strategic peak selection to eliminate duplicates and zeros.</p>
+
+                <p>The 10th order all-pole model for the vowel segment took the following form:</p>
+
+                <img src="images/past-projects/10thallpole.avif" alt="10th order all-pole model equation" class="project-image">
+                <p class="image-caption">Mathematical representation of the 10th order all-pole model</p>
+
+                <p>Comparing the power spectral density of the actual vowel segment with the 10th order all-pole model showed that the model was an excellent estimator, particularly for periodic sections:</p>
+
+                <img src="images/past-projects/periodogram.avif" alt="PSD comparison between original and model" class="project-image">
+                <p class="image-caption">Power spectral density comparison showing excellent model performance</p>
+
+                <p>The analysis function segmented the entire signal into chunks with 15 ms overlaps. Each segment was windowed with a Hamming window and had its 10th order all-pole model created, including pitch and voiced/unvoiced determination. Extensive testing was required to optimize the minimum peak distance parameter.</p>
+
+                <h3>Results</h3>
+                <div class="highlights">
+                    <h3>Synthesis Success!</h3>
+                    <p>The synthesis function combined normalized impulse trains (for voiced sounds) or white noise (for unvoiced sounds) with the coefficients to recreate the speech. The original phrase was distinctly audible in the synthesized version!</p>
+                    <p><em>Audio files available in original project</em></p>
+                </div>
+
+                <p>Filter order proved critical - startup transients were noticeable when segments weren't processed in the correct order. A better approach would eliminate the playback loop and process segments serially with proper state management.</p>
+
+                <p>An additional experiment with "Cepstral Domain Pitch Detection" was also successful, producing a more robotic but distinctly cooler-sounding result. The delay was intentionally left unoptimized because of the interesting acoustic effect it created.</p>
+            </section>
+
+            <!-- Final Thoughts -->
+            <section class="content-section">
+                <h2>Lessons Learned</h2>
+                <p>These signal processing projects demonstrated the power of digital filtering and mathematical modeling in extracting meaningful information from noisy signals and recreating human speech. The ECG project highlighted the importance of proper filter design and the tradeoffs between different filtering approaches, while the speech synthesis project showcased how complex human speech can be decomposed and reconstructed using relatively simple mathematical models.</p>
+
+                <div class="quote">
+                    <p>The intersection of mathematics, engineering, and human physiology creates fascinating challenges that have real-world applications in medical devices and communication systems. These projects provided hands-on experience with the theoretical concepts that power modern signal processing applications.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

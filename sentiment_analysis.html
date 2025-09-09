@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* GitHub link */
+        .github-link {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .github-link:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .highlight-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Sentiment Analysis</h1>
+            <p class="project-subtitle">From Text Skeptic to NLP Enthusiast: Movie Reviews and Machine Learning</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>I initially was unenthusiastic about diving into anything to do with text. With the LLMs doing all kinds of neat things recently, I figured it was time to start exploring.</p>
+            </section>
+
+            <!-- Setup -->
+            <section class="content-section">
+                <h2>Setup</h2>
+                <p>Part of the reason I wanted to explore sentiment analysis is because I have many models built in my notebook and I was curious to know how extensible they were to text data. If you open the notebook, you'll see what a mess I created at first, then cleaned up, then added some dataframe manipulation that I was used to. In a funny way I am delighted it took me a bit to figure things out because finding so many roadblocks (no tokenization, no lemmatization, no vectorization...at first) so quickly is what i really enjoy about projects. Fortunately I had some great examples to follow and I was able to blend my own approaches to text classification.</p>
+
+                <p>Some key challenges I faced were lack of familiarity with the nltk package, with vectorization, and with text data manipulation. I always want to put things into a dataframe right away!</p>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">NLTK</span>
+                    <span class="tech-tag">Scikit-learn</span>
+                    <span class="tech-tag">SVM</span>
+                    <span class="tech-tag">TF-IDF</span>
+                    <span class="tech-tag">NLP</span>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section class="content-section">
+                <h2>Methodology</h2>
+                <p>I take a known set of movie reviews from the movie_reviews corpus, download it, and begin to take it apart in search of understanding the review text (what the person wrote about the movie) and the overall rating (category). This particular dataset is an object, which presented problems for my traditional methodology of churning through things.</p>
+
+                <p>I extracted the total number of words, categories, unique words, word frequencies, and was able to create the following format for the dataset:</p>
+
+                <div class="quote">
+                    <p>[review words that someone wrote], rating</p>
+                </div>
+
+                <p>This was my first breakthrough, and I wasn't expecting it. I next created a feature vector, wrote a function to find features and create feature sets. With these feature sets I used the trusty scikitlearn package to create a SVC (SVM) model, and test its accuracy. I'll talk more about this in the Results section.</p>
+
+                <p>Finally, I wanted to compare the SVC to some other classifier models that I'm very familiar with: logistic regression, decision trees, and random forest. My ultimate goal is to use this as a starting point to run pycaret, where I'll be able to look across models easily and compare them together (this piece is not yet done).</p>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Results</h2>
+                <p>When I reduced the vector size to [:20], I was able to achieve an accuracy of 0.51. Boo.</p>
+
+                <div class="highlight-box">
+                    <h3>The Coin Flip Problem</h3>
+                    <p>Obviously this is pretty poor and I could do well to find a coin I like and flip that the next time I want to use such a small vector.</p>
+                </div>
+
+                <p>Steadily increasing the vector size based on my own personal tolerance for waiting, I found a personal limit at 12 minutes for this step. That corresponded to a vector size of 400. Given that the total size of the dataset is 2000 reviews with almost 40,000 unique words, only using 1% wasn't going to be acceptable going forward. Some interesting comparisons in the table below:</p>
+
+                <img src="images/current-work/sentiment_one.avif" alt="Sentiment analysis results comparison table" class="project-image">
+                <p class="image-caption">Not a professional table for inclusion in a paper, but it captures the directionality of key findings</p>
+
+                <p>Ok so this is not a professional table for inclusion in a paper, but it does capture the directionality of a few key things. One, that the vector size has a strong correlation to accuracy when the vector size is approximately 1% of the total data. Two, that accuracy can be increased rapidly if a little more patience and processing time can be accommodated. Three, that my limit is 12 minutes per step! I think I need a new computer or I need to learn multi-threading (a project for later). Lastly, under "Observable patterns", I use the term 'diverse' to describe the uniformity of the data I saw. Less diverse = a lot of punctuation and not many words, or the words were very similar. As diversity increases, I saw many more words and different words. Also the data sets grew much larger with a larger vector.</p>
+
+                <p>In all, I wanted to improve accuracy if possible, so I turned to another method of utilizing the data: tokenization and lemmatization, combined with vectorization. These things combined help the models interpret the text numerically as a vector, which simplifies (to a degree) the interconnectedness of the patterns one is trying to suss out.</p>
+
+                <div class="highlight-box">
+                    <h3>Breakthrough Results</h3>
+                    <p>Using vectorization with the tokens and lemmas led to an accuracy of 0.816. Pretty dramatic.</p>
+                </div>
+
+                <p>It turns out that I used the tf-idf (term frequency-inverse document frequency) vectorizer which is pretty common. There are several types but this is a common one. I was able to run the other models I referred to earlier and achieved a similar accuracy score for each one (all around 0.82).</p>
+
+                <p>It's notable that I did not tune the hyperparameters of any of the models at first. All of the accuracy numbers discussed here are without tuning. The results can improve a bit with tuning for all of the models.</p>
+
+                <p>Another main goal of this project is to compare models together to see which one applies to a dataset with this kind of diversity and a dataset of this size. The primary reason is to have a baseline for future projects where I might be dealing with significantly larger amounts of data or data that diversifies in a different way.</p>
+
+                <p>It should be noted that I could have created a reasonable approximation of the un-tuned models by sampling from the data and running the first model that way. I did not try that with this project but I've done that on others and have had success.</p>
+
+                <p>In the .ipynb file there is some fancification done by way of a confusion matrix and I'll be adding the pycaret section when I have some time.</p>
+
+                <div class="quote">
+                    <p>Overall I have a much greater appreciation for text/language-based models. While there is more to explore, this project gave me a great starting point for more experimentation.</p>
+                </div>
+
+                <a href="https://github.com/mkrohn5051/SentimentAnalysis.git" class="github-link" target="_blank">
+                    View Sentiment Analysis Code on GitHub →
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

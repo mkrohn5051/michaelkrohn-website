@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultrasound Acoustics Project - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Side-by-side images */
+        .image-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .image-pair img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .image-pair img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Project separator */
+        .project-separator {
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlights box */
+        .highlights {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlights h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlights p {
+            margin-bottom: 1rem;
+        }
+
+        /* Parameters box */
+        .parameters {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .parameters h4 {
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+
+        /* Technical note */
+        .technical-note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .technical-note h4 {
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-pair {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Ultrasound Acoustics Engineering</h1>
+            <p class="project-subtitle">Exploring the Science Behind Medical Imaging</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>This comprehensive exploration of acoustic engineering covers the fundamental principles behind ultrasound medical imaging. The work represents a sequential building upon key topics in acoustics, from beam focusing to signal processing, all with direct applications to the technology that provides windows into the human body.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">MATLAB</span>
+                    <span class="tech-tag">Acoustic Engineering</span>
+                    <span class="tech-tag">Ultrasound Physics</span>
+                    <span class="tech-tag">Beam Forming</span>
+                    <span class="tech-tag">Medical Imaging</span>
+                    <span class="tech-tag">Signal Processing</span>
+                </div>
+
+                <div class="quote">
+                    <p>This topic is near and dear to me as it heavily overlaps with my professional life. The methodology and results of each major topic are self-contained and represent real applications of the science behind medical ultrasound technology.</p>
+                </div>
+            </section>
+
+            <!-- Beam Focusing -->
+            <section class="content-section">
+                <h2>Beam Focusing with Rayleigh Sommerfeld Method</h2>
+
+                <h3>Methodology and Results</h3>
+                <p>The first challenge was taking an unfocused beam and using the numerical Rayleigh Sommerfeld method to focus it. This classic circular piston problem used a specified radius of 1 cm, mimicking a cardiac phased array probe. The objective was to plot the continuous wave beam at 1 MHz out to 12 cm in water, then repeat the exercise for a focus at 5 cm.</p>
+
+                <div class="technical-note">
+                    <h4>Key Insight</h4>
+                    <p>With deep gratitude, the partial solution was shown in concept without giving away the implementation details. The solution relied on 9th grade geometry principles applied to complex acoustic wave propagation.</p>
+                </div>
+
+                <p>Here are the initial results before optimization. The unfocused beam is on the left and the focused beam is on the right:</p>
+
+                <div class="image-pair">
+                    <img src="images/past-projects/r1_left.avif" alt="Initial unfocused beam attempt">
+                    <img src="images/past-projects/r1_right.avif" alt="Initial focused beam attempt">
+                </div>
+                <p class="image-caption">Initial attempts - the results didn't feel good and looked about as good as they felt</p>
+
+                <p>The initial results were problematic - the axis labels were wrong and the focusing wasn't working properly. After coffee and more careful MATLAB work, the results improved significantly:</p>
+
+                <img src="images/past-projects/r2_left.avif" alt="Corrected beam focusing results" class="project-image">
+                <p class="image-caption">Improved results showing clear beam convergence at 0.04 m - much better!</p>
+
+                <p>This problem was particularly satisfying because the results are quite visible. A clear convergence can be seen at 0.04 m, demonstrating the effectiveness of the Rayleigh Sommerfeld numerical method for beam focusing calculations.</p>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Complex Analytic Signal -->
+            <section class="content-section">
+                <h2>Complex Analytic Signal Processing</h2>
+
+                <h3>Methodology</h3>
+                <p>The next challenge involved finding the magnitude of the complex analytic signal from both simulated and real RF waveforms (A-scan, one dimensional). The process involved several key steps using MATLAB:</p>
+
+                <div class="parameters">
+                    <h4>Signal Processing Steps:</h4>
+                    <p>• Find the FFT of the signal</p>
+                    <p>• Zero FFT bits to produce the spectrum of analytic signal, using frequency cutoff to eliminate frequencies outside the passband</p>
+                    <p>• Compute the IFFT of the analytic spectrum and double it to produce the complex analytic signal</p>
+                    <p>• Take the magnitude of the complex analytic signal</p>
+                    <p>• Plot the signal and the magnitude of the complex analytic signal together</p>
+                </div>
+
+                <h3>Results</h3>
+                <p>The simulated and measured signals with their extracted envelopes:</p>
+
+                <div class="image-pair">
+                    <img src="images/past-projects/r3_left.avif" alt="Simulated signal with envelope">
+                    <img src="images/past-projects/r3_right.avif" alt="Measured signal with envelope">
+                </div>
+                <p class="image-caption">Simulated (left) and measured (right) RF signals with extracted envelopes</p>
+
+                <p>The original signal processing challenge:</p>
+
+                <img src="images/past-projects/r4.avif" alt="Original RF signal" class="project-image">
+                <p class="image-caption">Original RF waveform used for envelope extraction</p>
+
+                <div class="technical-note">
+                    <h4>Bonus Challenge: Built-in MATLAB Function</h4>
+                    <p>Using MATLAB's built-in 'envelope' function proved surprisingly effective, getting very close to the manual implementation results with numerous options for fine-tuning.</p>
+                </div>
+
+                <img src="images/past-projects/r5.avif" alt="Envelope function results" class="project-image">
+                <p class="image-caption">Results using MATLAB's built-in envelope function - impressively close to manual implementation</p>
+
+                <div class="technical-note">
+                    <h4>Double Bonus: Custom Filter Approach</h4>
+                    <p>Low-pass Chebyshev2 and Butterworth filters were also tested for envelope detection. Results were less predictable, with filter parameters having significant impact on effectiveness. The filters followed the original signal peaks too closely, requiring more refinement.</p>
+                </div>
+
+                <img src="images/past-projects/r6.avif" alt="Custom filter envelope results" class="project-image">
+                <p class="image-caption">Custom filter results - following peaks too closely, more work needed for optimal performance</p>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Resolution Improvement -->
+            <section class="content-section">
+                <h2>Resolution Enhancement</h2>
+
+                <h3>Challenge</h3>
+                <p>Given a pulse echo signal, the goal was to shorten the transmitted pulse length to achieve improved resolution, then determine what else could be changed without modifying the transducer to achieve a 2x improvement in resolution.</p>
+
+                <h3>Results</h3>
+                <p>The image below shows a summary of adjustments made to achieve optimum resolution. Note the progression from fuzzy, thick white bars to much cleaner, well-defined features:</p>
+
+                <img src="images/past-projects/r7.avif" alt="Resolution improvement progression" class="project-image">
+                <p class="image-caption">Resolution improvement progression: original (left), halved pulse length (center), optimized bandwidth (right)</p>
+
+                <p>The left image shows the original pulse echo signal with characteristic fuzzy white bars across the middle. The center image was created with a halved transmit pulse length. The reason a full 2x improvement isn't seen is because only the transmit electrical pulse length was adjusted - this is only part of the resolution battle.</p>
+
+                <p>The other major component is transducer bandwidth. When this is adjusted along with the halved electrical pulse, we achieve much closer to a 2x improvement in resolution. This can be practically achieved by adjusting the bandpass filter range to allow more signal through, though there are practical limits.</p>
+
+                <div class="highlights">
+                    <h3>Frequency Impact</h3>
+                    <p>For the final part, transmit frequency increased from 5 MHz to 10 MHz. This seemingly simple change dramatically reframes the design problem:</p>
+                    <p><strong>5 MHz crystal thickness:</strong> 0.154 mm</p>
+                    <p><strong>10 MHz crystal thickness:</strong> 0.077 mm</p>
+                    <p>This significant reduction impacts manufacturing cost, expertise requirements, breakage rates, and ultimately transducer pricing.</p>
+                </div>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Delay and Sum Beamforming -->
+            <section class="content-section">
+                <h2>Delay and Sum Beamforming</h2>
+
+                <h3>Concept</h3>
+                <p>Echoes and their reflections, when delayed to be made "flat," then summed to show overall brightness level using the magnitude of the Hilbert transform, create an image! This is the fundamental principle behind ultrasound imaging.</p>
+
+                <h3>Process and Results</h3>
+                <p>Starting with echoes from targets at 1 and 2 cm respectively, the process involves time-aligning (flattening) the signals:</p>
+
+                <div class="image-pair">
+                    <img src="images/past-projects/r8_left.avif" alt="Original echoes from targets">
+                    <img src="images/past-projects/r8_right.avif" alt="Time-aligned flattened echoes">
+                </div>
+                <p class="image-caption">Original echoes from targets (left) and the time-aligned "flattened" versions (right)</p>
+
+                <p>The final step applies the magnitude of the Hilbert transform after summing all the aligned signals:</p>
+
+                <img src="images/past-projects/r9.avif" alt="Final beamformed image" class="project-image">
+                <p class="image-caption">Final beamformed image showing the targets as bright spots</p>
+            </section>
+
+            <div class="project-separator"></div>
+
+            <!-- Contrast Analysis -->
+            <section class="content-section">
+                <h2>Contrast Analysis</h2>
+
+                <h3>Overview</h3>
+                <p>Contrast is a rich subject with extensive applications in ultrasound imaging. At its core, contrast involves comparing adjacent regions' average peak values. While Speckle SNR, envelope variance, and envelope mean are all important parameters, the fundamental concept is the comparison of adjacent regions.</p>
+
+                <img src="images/past-projects/r10.avif" alt="Contrast analysis regions" class="project-image">
+                <p class="image-caption">Speckle region (left) and contrast region (right) used for contrast calculations</p>
+
+                <p>To calculate Contrast for this image, we use: 20*log10(SpeckleMean/ContrastMean). Depending on the context, these regions may be swapped, but the calculated value provides the important quantitative measure of image contrast quality.</p>
+            </section>
+
+            <!-- Final Thoughts -->
+            <section class="content-section">
+                <h2>Personal Reflection</h2>
+                <p>This comprehensive journey through acoustic engineering provided deep insights into how ultrasound technology actually works. Learning how basic concepts are calculated and discovering new mathematical applications was incredibly rewarding. The work gave me tremendous appreciation for the colleagues I work with and their ability to transform these concepts into medical technology that helps people.</p>
+
+                <div class="quote">
+                    <p>I'll never forget the times my wife was pregnant with each daughter, and how fortunate we were to have medical care that provided a window into our future through ultrasound. The technology that seemed so magical then now has concrete mathematical foundations that I can understand and appreciate on a much deeper level.</p>
+                </div>
+
+                <div class="highlights">
+                    <h3>Key Learning Outcomes</h3>
+                    <p>• Understanding the mathematical foundations of medical ultrasound</p>
+                    <p>• Hands-on experience with beam focusing and signal processing</p>
+                    <p>• Appreciation for the engineering challenges in medical device development</p>
+                    <p>• Connection between academic theory and real-world medical applications</p>
+                </div>
+
+                <p>This work represents not just academic exercises, but real understanding of technology that touches millions of lives. The intersection of physics, mathematics, and medicine creates truly inspiring applications of engineering knowledge.</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .image-pair img').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

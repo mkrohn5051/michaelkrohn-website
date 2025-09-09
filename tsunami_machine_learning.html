@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsunami Machine Learning Project - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section h3 {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Project separator */
+        .project-separator {
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 4rem 0;
+            border-radius: 1px;
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Highlights box */
+        .highlights {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlights h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlights p {
+            margin-bottom: 1rem;
+        }
+
+        /* Problem statement box */
+        .problem-statement {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-left: 4px solid #fdcb6e;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 2rem 0;
+        }
+
+        .problem-statement h4 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        /* Data insights */
+        .data-insight {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 2rem 0;
+        }
+
+        .data-insight h4 {
+            color: #155724;
+            margin-bottom: 1rem;
+        }
+
+        /* Results table styling */
+        .results-table {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .results-table h4 {
+            color: #495057;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Challenge callout */
+        .challenge {
+            background: #ffe6e6;
+            border: 1px solid #ffcdd2;
+            border-left: 4px solid #f44336;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 2rem 0;
+        }
+
+        .challenge h4 {
+            color: #c62828;
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Tsunami Wave Prediction</h1>
+            <p class="project-subtitle">Machine Learning for Disaster Risk Reduction</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>Having a strong background in statistics and stochastic processes, applying machine learning concepts through Python programming was an awesome challenge. This project showcases the tools, methods, algorithms, and processes for predicting tsunami wave conditions to help communities prepare for catastrophic events.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Machine Learning</span>
+                    <span class="tech-tag">Scikit-learn</span>
+                    <span class="tech-tag">PyCaret</span>
+                    <span class="tech-tag">Data Science</span>
+                    <span class="tech-tag">Disaster Prediction</span>
+                </div>
+            </section>
+
+            <!-- Setup -->
+            <section class="content-section">
+                <h2>Project Setup</h2>
+                
+                <div class="problem-statement">
+                    <h4>Problem Statement</h4>
+                    <p>When a catastrophic event such as a volcano eruption or an earthquake occurs, extreme wave conditions generated by the event can cause millions of dollars in damage, devastating environmental impact, and even loss of life. Early and accurate prediction of wave conditions at the point of impact could reduce the effects of such events and even help save lives.</p>
+                </div>
+
+                <div class="problem-statement">
+                    <h4>Machine Learning Problem</h4>
+                    <p>Given a catastrophic event that generates extreme wave conditions, predict wave conditions at impacted areas. These areas could include coastlines, islands, and other geographical features where loss occurs.</p>
+                    <p><strong>Approach:</strong> Use buoy and meteorological datasets (NDBC, CDIP, and MSW) to create a regression model for estimating wave conditions in various locations.</p>
+                    <p><strong>Evaluation:</strong> Predicting wave conditions in tsunami risk zones could help communities avoid financial loss and enable life-saving evacuation efforts.</p>
+                </div>
+
+                <div class="challenge">
+                    <h4>Primary Challenge</h4>
+                    <p>Adequately narrowing the scope of the project to make it manageable while maintaining real-world applicability.</p>
+                    <br>
+                    <p><strong>Secondary Challenges:</strong></p>
+                    <p>• Determining which features to use from complex geological and oceanographic data</p>
+                    <p>• Incorporating time/spatial information and correlation between measurements</p>
+                    <p>• Overcoming geographical/geological constraints (underwater volcanoes, shorelines, islands)</p>
+                </div>
+            </section>
+
+            <!-- Data Analysis -->
+            <section class="content-section">
+                <h2>Data Exploration and Feature Engineering</h2>
+
+                <h3>Initial Data Assessment</h3>
+                <p>Reading the dataset into Python revealed considerable missing data, but the dataset contained good filters to identify event validity (e.g., "definite tsunami" vs "erroneous entry"). The data included various measurement methods for run-up height, which were normalized to align with total wave height measurements.</p>
+
+                <div class="data-insight">
+                    <h4>Data Quality</h4>
+                    <p>Missing target variable data: 2,183 rows out of 25,051 total (8.7%)</p>
+                    <p>This aligns well with industry standards for acceptable missing data levels.</p>
+                </div>
+
+                <p>Preference was given to objectively measured data categorized as "definite tsunami" events. A correlation heatmap was generated to understand variable relationships and reduce the feature set accordingly.</p>
+
+                <img src="images/past-projects/corr1.avif" alt="Initial correlation heatmap with 45 features" class="project-image">
+                <p class="image-caption">Initial correlation heatmap showing 45 total features and their relationship to the target variable</p>
+
+                <p>Features that were results of a tsunami (rather than causes) were eliminated (16 total), along with features having excessive missing data or redundancy (16 more), resulting in a much cleaner correlation structure:</p>
+
+                <img src="images/past-projects/corr2.avif" alt="Cleaned correlation heatmap" class="project-image">
+                <p class="image-caption">Cleaned correlation heatmap after feature elimination - trends are emerging clearly</p>
+
+                <h3>Key Insights from Feature Analysis</h3>
+                <p>Both high and low correlated features proved important. Earthquake magnitude and distance from earthquake emerged as major factors, while geographical location showed less global impact. Some years proved more prolific than others for tsunami events.</p>
+
+                <div class="quote">
+                    <p>Side note: We were warned about going down the rabbit hole during feature engineering. I learned extensively about subduction-induced earthquakes and discovered why oval-shaped earthquake propagation patterns cause more damage than circular patterns, given the same magnitude, location, and distance from run-up. The physics behind wave sustainability over distance was particularly fascinating.</p>
+                </div>
+
+                <p>After addressing scaling issues (RobustScaler proved essential), temporal data leakage concerns, and duplicate detection, the feature set was reduced to its most predictive elements:</p>
+
+                <img src="images/past-projects/corr3.avif" alt="Final reduced feature set" class="project-image">
+                <p class="image-caption">Final feature set - from nearly 50 features down to 6 essential predictors</p>
+
+                <p>InterpretML confirmed the top contributors to tsunami run-up prediction:</p>
+
+                <img src="images/past-projects/xbc_MAS.avif" alt="Feature importance analysis" class="project-image">
+                <p class="image-caption">Feature importance analysis showing the most critical predictive factors</p>
+
+                <div class="data-insight">
+                    <h4>Natural Feature Splits Discovered</h4>
+                    <p><strong>Distance From Source:</strong> Natural split at 300 km (nearly 50/50 distribution)</p>
+                    <p><strong>Earthquake Magnitude:</strong> Three natural groups - below 8.0, 8.0-9.0, and above 9.0</p>
+                </div>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Model Performance and Results</h2>
+
+                <h3>Baseline Model Comparison</h3>
+                <p>Six baseline models were established to evaluate scaling and determine optimal approaches: Linear Regression, Bayesian Ridge, Lasso CV, ElasticNet CV, SVR (RBF), and SVR (5th degree polynomial).</p>
+
+                <img src="images/past-projects/baseline.avif" alt="Baseline model performance comparison" class="project-image">
+                <p class="image-caption">Baseline model performance - demonstrating the critical importance of proper scaling</p>
+
+                <p>The baseline results highlighted minimal differences between the first four models. However, applying the discovered feature splits revealed significant improvements, particularly for the 300 km distance threshold and magnitude groupings:</p>
+
+                <div class="results-table">
+                    <h4>Model Performance by Distance Threshold</h4>
+                    <img src="images/past-projects/table2.avif" alt="Distance threshold results" class="project-image">
+                </div>
+
+                <div class="results-table">
+                    <h4>Model Performance by Magnitude Groups</h4>
+                    <img src="images/past-projects/table46.avif" alt="Magnitude grouping results" class="project-image">
+                </div>
+
+                <p>The results show dramatic accuracy improvements when diving deeper into the two most correlated features. The physical explanations for these variations align with tsunami propagation physics and seismic energy distribution patterns.</p>
+
+                <h3>Advanced Model Performance</h3>
+                <div class="highlights">
+                    <h3>PyCaret Results</h3>
+                    <p><strong>After Feature Engineering:</strong></p>
+                    <p>Light Gradient Boosting Machine: MAE = -0.41, RMSE = -0.91</p>
+                    <p><strong>Raw Dataset (Before Engineering):</strong></p>
+                    <p>Bayesian Ridge Regression: MAE = -0.092, RMSE = -0.241</p>
+                    <p>These results align well with industry standards for tsunami run-up prediction!</p>
+                </div>
+
+                <p>The obvious advantage of using PyCaret immediately is impressive results, but the path to achieving those results can be difficult to understand and explain - a critical consideration for disaster prediction systems.</p>
+
+                <div class="data-insight">
+                    <h4>Industry Comparison</h4>
+                    <p>Comparing the Light Gradient Boosting Machine results to industry standard tsunami run-up predictions, our MAE and RMSE align well with similar research efforts. The combination of these predictive elements with real-time seafloor measurements could provide optimal outcomes for avoiding loss of life and resources.</p>
+                </div>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="content-section">
+                <h2>Project Impact and Learning</h2>
+
+                <p>This project was terrific on several fronts. Learning to dive deeply into data, understand underlying patterns, and extract actionable insights represents core aspects of effective machine learning. The results achieved were remarkably close to other industry standard modeling efforts, which was both validating and exciting.</p>
+
+                <div class="quote">
+                    <p>The project perfectly bridged my statistical background with practical Python implementation, while addressing a real-world problem that could literally save lives. Understanding the geophysical processes behind tsunami generation and propagation added depth that pure data analysis alone couldn't provide.</p>
+                </div>
+
+                <div class="highlights">
+                    <h3>Key Achievements</h3>
+                    <p>• Successfully reduced feature space from 45 to 6 critical predictors</p>
+                    <p>• Achieved industry-competitive prediction accuracy</p>
+                    <p>• Discovered meaningful natural splits in key variables</p>
+                    <p>• Demonstrated the critical importance of proper data scaling</p>
+                    <p>• Connected machine learning techniques to real disaster prevention</p>
+                </div>
+
+                <h3>Future Directions</h3>
+                <p>Further exploratory work could include applying neural networks or other advanced modeling techniques for potentially better results. Integration with real-time seismic and oceanographic monitoring systems could create operational early warning capabilities.</p>
+
+                <div class="data-insight">
+                    <h4>Repository Access</h4>
+                    <p>The complete project, including all code, data processing pipelines, and detailed analysis, can be found at: <strong>https://github.com/mkrohn5051/WaveRunup.git</strong></p>
+                </div>
+
+                <p>This work demonstrates how statistical knowledge, combined with modern machine learning tools and domain expertise, can address critical societal challenges. The potential for this type of analysis to contribute to disaster risk reduction makes it particularly meaningful beyond its technical achievements.</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
