@@ -151,19 +151,26 @@
         }
 
         .gallery-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
+			width: 100%;
+			aspect-ratio: 4/3; /* Force container to be 4:3 to match your images */
+			border-radius: 10px;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s ease;
+			cursor: pointer;
+			object-fit: cover;
+			object-position: center;
+		}
+		
+		.gallery-image.results-image {
+			aspect-ratio: 4/3;
+			object-fit: contain;
+			background-color: #f8f9fa;
+		}
 
-        .gallery-image:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
+		.gallery-image:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+		}
 
         /* Tech stack */
         .tech-stack {
@@ -433,17 +440,17 @@
                 <p>You can see the spray paint on the chest piece that I wasn't able to show earlier...that turned out well. The stencil was easy to make and applying a heat gun to the EVA foam before painting made the difference in the final look.</p>
 
                 <div class="image-gallery">
-                    <img src="images/current-work/results_1.avif" alt="Final costume result 1" class="gallery-image">
-                    <img src="images/current-work/results_2.avif" alt="Final costume result 2" class="gallery-image">
-                    <img src="images/current-work/results_3.avif" alt="Final costume result 3" class="gallery-image">
-                    <img src="images/current-work/results_4.avif" alt="Final costume result 4" class="gallery-image">
+                    <img src="images/current-work/results_1.avif" alt="Final costume result 1" class="gallery-image results-image">
+                    <img src="images/current-work/results_2.avif" alt="Final costume result 2" class="gallery-image results-image">
+                    <img src="images/current-work/results_3.avif" alt="Final costume result 3" class="gallery-image results-image">
+                    <img src="images/current-work/results_4.avif" alt="Final costume result 4" class="gallery-image results-image">
                 </div>
 
                 <div class="image-gallery">
-                    <img src="images/current-work/results_5.avif" alt="Final costume result 5" class="gallery-image">
-                    <img src="images/current-work/results_6.avif" alt="Final costume result 6" class="gallery-image">
-                    <img src="images/current-work/results_7.avif" alt="Final costume result 7" class="gallery-image">
-                    <img src="images/current-work/results_8.avif" alt="Final costume result 8" class="gallery-image">
+                    <img src="images/current-work/results_5.avif" alt="Final costume result 5" class="gallery-image results-image">
+                    <img src="images/current-work/results_6.avif" alt="Final costume result 6" class="gallery-image results-image">
+                    <img src="images/current-work/results_7.avif" alt="Final costume result 7" class="gallery-image results-image">
+                    <img src="images/current-work/results_8.avif" alt="Final costume result 8" class="gallery-image results-image">
                 </div>
                 <p class="image-caption">The complete Fallout New Vegas costume - 10 months of work culminating in Halloween success!</p>
 
@@ -458,7 +465,8 @@
         </div>
     </main>
 
-    <script>
+    
+	<script>
         // Image click to zoom
         document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
             img.addEventListener('click', function() {
