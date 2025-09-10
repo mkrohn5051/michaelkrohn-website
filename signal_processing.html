@@ -206,6 +206,38 @@
             font-style: italic;
         }
 
+        /* Audio styles */
+        .audio-container {
+            display: grid;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .audio-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .audio-item h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .audio-item audio {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .audio-caption {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
         /* Highlights box */
         .highlights {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 100%);
@@ -426,6 +458,41 @@
                 <p>Filter order proved critical - startup transients were noticeable when segments weren't processed in the correct order. A better approach would eliminate the playback loop and process segments serially with proper state management.</p>
 
                 <p>An additional experiment with "Cepstral Domain Pitch Detection" was also successful, producing a more robotic but distinctly cooler-sounding result. The delay was intentionally left unoptimized because of the interesting acoustic effect it created.</p>
+            </section>
+
+            <!-- Audio Results -->
+            <section class="content-section">
+                <h2>Audio Results</h2>
+                <p>Listen to the original speech signal and compare it with the synthesized versions:</p>
+
+                <div class="audio-container">
+                    <div class="audio-item">
+                        <h4>Original Speech</h4>
+                        <audio controls>
+                            <source src="images/past-projects/Original.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-caption">The original recording: "The empty flask stood on a tin tray."</p>
+                    </div>
+
+                    <div class="audio-item">
+                        <h4>Synthesized Audio Signal</h4>
+                        <audio controls>
+                            <source src="images/past-projects/Synthesized_Audio_Signal.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-caption">Speech reconstructed using the 10th order all-pole model</p>
+                    </div>
+
+                    <div class="audio-item">
+                        <h4>Cepstral Method</h4>
+                        <audio controls>
+                            <source src="images/past-projects/Cepstral_Method.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="audio-caption">Alternative synthesis using cepstral domain pitch detection - more robotic but distinctly cool!</p>
+                    </div>
+                </div>
             </section>
 
             <!-- Final Thoughts -->
