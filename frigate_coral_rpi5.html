@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frigate Coral RPi5 Project - Michael Krohn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Project header */
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Content sections */
+        .content {
+            padding: 3rem;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Image styles */
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .gallery-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tech stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            color: #495057;
+        }
+
+        /* GitHub link */
+        .github-link {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .github-link:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        /* Quote style */
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* External link style */
+        .external-link {
+            color: #667eea;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .external-link:hover {
+            color: #5a6fd8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Michael Krohn</a>
+            <a href="index.html" class="back-button">← Back to Portfolio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Project Header -->
+        <section class="project-header">
+            <h1 class="project-title">Frigate NVR with Coral TPU</h1>
+            <p class="project-subtitle">Privacy-First Home Surveillance: Raspberry Pi 5, Docker, and AI Object Detection</p>
+        </section>
+
+        <!-- Project Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <section class="content-section">
+                <p>Inspiration for this project came from attending a forum hosted by EFF about privacy. I'm starting to explore this space more and more and felt like one good way to cement my new knowledge was to put my project skills where my passions are.</p>
+                
+                <p>I came across an article about a program called Frigate that would allow me to use an RTSP (Real-Time Streaming Protocol) connection to connect/collect video streams all in one place. I could then record, take snapshots, and actively view these streams from Frigate with some sort of connection to the hardware from the internet. The game was afoot!</p>
+            </section>
+
+            <!-- Problem Statement -->
+            <section class="content-section">
+                <h2>The Problem</h2>
+                <p>Over the past few years I have accumulated some cheap but powerful home monitoring cameras. When I got them I didn't necessarily want the AI-enabled features that came along with them, but instead just a simple way to check on things when I'm away, to make sure doors were closed, and to make sure that my dog was where he should be.</p>
+
+                <p>These worked GREAT until a couple of months ago when the application I would check on my phone made me watch a video to open the app. Then another ad after selecting the camera I wanted. Then another if I wanted to switch back, and all of that was AFTER I had to close out the ads for new and improved AI features. Too much.</p>
+
+                <div class="quote">
+                    <p>Instead of looking for new cameras that would hopefully not do the same thing, I went with a gut feeling that these things could be hacked.</p>
+                </div>
+
+                <p>I was overwhelmed -- not only could they be hacked but there is a huge group of people that support the firmware changes and it really isn't too tricky. Some models work better than others, and connecting to wifi can be a challenge, but I was further inspired by a friend of mine who recently jumped into firmware hacking and was able to pretty easily bypass the trickiness of connecting to wifi with my own modification to the hacked firmware.</p>
+            </section>
+
+            <!-- Setup and Technology -->
+            <section class="content-section">
+                <h2>Technology Stack</h2>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">Raspberry Pi 5</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">Frigate NVR</span>
+                    <span class="tech-tag">Coral TPU</span>
+                    <span class="tech-tag">Nginx</span>
+                    <span class="tech-tag">RTSP Streams</span>
+                    <span class="tech-tag">RustDesk</span>
+                </div>
+
+                <p>I happened to have a Raspberry Pi 5 that I was using for another project. Obviously there is some expenses here that I was getting to avoid, but overall I would say that for less than a fully-kitted NVR system, a person could replicate this setup relatively easily for under 300 USD.</p>
+
+                <p>I decided to use a Docker installation of Frigate because I hadn't used Docker very extensively recently and I wanted to see how it would work on the RPi5 hardware. Turns out, great! I was doing this setup work from my Windows PC using RustDesk, which is another highly recommended program for RPi work. It just works.</p>
+
+                <!-- Add placeholder for eff.png image -->
+                <img src="images/current-work/eff.png" alt="EFF Privacy Forum inspiration" class="project-image">
+                <p class="image-caption">EFF Privacy Forum - the inspiration that started this privacy-focused project</p>
+            </section>
+
+            <!-- Configuration -->
+            <section class="content-section">
+                <h2>Camera Configuration</h2>
+                <p>I took the RTSP streams from my cameras (four in total) and combined it with the Frigate configuration to set it all up. I had a couple of cameras that were positioned upside-down and that caused me a little trouble at first. I tried to edit these settings in Frigate, but it seemed a little touchy so I edited the RTSP streams and camera settings directly so that I wouldn't have to adjust the basic configuration:</p>
+
+                <div class="code-block">
+                    <code>
+<strong>camera_x:</strong><br>
+&nbsp;&nbsp;<strong>ffmpeg:</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<strong>inputs:</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>- path: rtsp://your_username:your_password@xx.xx.xx.xx/ch0_0.h264</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>roles:</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>- detect</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>- record</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<strong>output_args:</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>record: preset-record-generic-audio-copy</strong>
+                    </code>
+                </div>
+            </section>
+
+            <!-- Performance Issues -->
+            <section class="content-section">
+                <h2>Performance Challenges and Solutions</h2>
+                <p>At this point I was also only planning on using the RPi5 as-is, but I'll mention that it's worth looking into a Coral TPU if your budget allows. With four streams and settings that were dialed back a bit (height: 720 px, recording settings set to 7, fps set to 5), things got toasty very quickly. That initially translates to spotty streaming but can damage the Pi long-term if you don't have an active cooler in there.</p>
+
+                <p>Another way to offload the Pi is to use the TPU for the image detection bits. Lots of great articles out there but I like this one: <a href="https://helgeklein.com/blog/frigate-nvr-with-object-detection-on-raspberry-pi-5-coral-tpu/" class="external-link" target="_blank">Frigate NVR with Object Detection on Raspberry Pi 5 + Coral TPU</a>. Setup is a little different if you use the USB Coral as I did, but the principles remain the same and the gains are incredible.</p>
+            </section>
+
+            <!-- Security -->
+            <section class="content-section">
+                <h2>Security Implementation</h2>
+                <p>Security was next. I wanted authentication and I wanted a bit of a shield to put the backend behind, so I went with nginx setup as a reverse proxy. These are neat and super lightweight -- basically, it sits between the client and the backend, playing traffic cop. This is done instead of connecting to my service hardware directly as is done in a regular "forward" proxy.</p>
+
+                <p>This is very easy to do, and is well-supported in online forums. There are some docker changes needed, and of course you'll have to supply the login details, but it's all done in about 7 steps. I also set up access to the RTSP feeds with authentication in case I need to simply look at the feed for any reason.</p>
+            </section>
+
+            <!-- Automation -->
+            <section class="content-section">
+                <h2>Automation and Reliability</h2>
+                <p>Next up was automating all of this. I needed my Pi to be able to weather a power outage and I didn't want to have to touch this after it was set up (in theory). I configured the Pi to auto-start Rustdesk and Frigate, then Docker and Nginx. I found it best (and you'll read this too) that it's best to add some wait periods for things to spin up. I have some generous wait times in there but I don't mind the 2-4 minute total startup time if I don't have to worry about it when the power comes back on.</p>
+
+                <p>All of this worked great and I could see my feeds just fine but running "htop" in the terminal showed me that my cores were cookin! It was then that I decided to commit to two more modifications: adding a separate SSD so that I could store information for a longer time without wasting space on my Pi and adding a Coral TPU to offload the CPU cores.</p>
+            </section>
+
+            <!-- Hardware Upgrades -->
+            <section class="content-section">
+                <h2>Hardware Upgrades</h2>
+                <p>I found a deal on a terabyte USB SSD, and I pondered the different hat solutions (Coral and non-Coral). I ended up going with the USB Coral device. While I don't realize that absolute fastest object detection (though 40x faster than just the CPU), I can use the USB Coral TPU on my other devices if I want to.</p>
+
+                <p>The SSD took a little configuration. I'm not as familiar with Linux as I once was, but it wasn't too tricky to mount the new drive and point the storage commands to it.</p>
+
+                <p>The Coral device was dreamy to set up. Plug it in, watch it cook. I verified that the Pi saw it, that it was functioning, and a few other tests of course but it was really plug-and-play. I had to switch my .yml files from using the CPU to using the TPU. I restarted the services and checked the logs...then I was done!</p>
+            </section>
+
+            <!-- Daily Integration -->
+            <section class="content-section">
+                <h2>Daily Integration</h2>
+                <p>Almost, lol. I really really wanted a way to interact with this on a daily basis but in a "positive" way. I settled on an Frigate API-driven daily email update to myself (from a new email address) that would tell me what yesterday's detection was up to. I included a link to the Frigate service in case I wanted to check things out further. The last piece was to set up the cron job such that I would email myself this update.</p>
+
+                <!-- Add placeholder for frigate_sample.png image -->
+                <img src="images/current-work/frigate_sample.png" alt="Sample Frigate detection email" class="project-image">
+                <p class="image-caption">Sample daily email update showing detection summary from Frigate</p>
+            </section>
+
+            <!-- Results -->
+            <section class="content-section">
+                <h2>Results and Performance</h2>
+                <p>Overall, I am delighted with how this turned out. My RPi CPU utilization is at 20% when I'm connected through RustDesk and 13% when I'm not. The email updates keep me plugged into the systems often enough that I don't feel like I'm abandoning anything, and I can always just auto-file it away if I don't care to peruse the findings.</p>
+
+                <div class="quote">
+                    <p>In all, this project was great. It took a weekend to do this, working steadily along as the hardware showed up (TPU and SSD were new additions).</p>
+                </div>
+
+                <p>I will anonymize the code and add it to my GitHub when I can but reach out if you'd like to see any of the code.</p>
+
+                <a href="#" class="github-link">
+                    View Code on GitHub (Coming Soon) →
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Image click to zoom
+        document.querySelectorAll('.project-image, .gallery-image').forEach(img => {
+            img.addEventListener('click', function() {
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '1';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                    this.style.zIndex = '1000';
+                    this.style.transition = 'transform 0.3s ease';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
